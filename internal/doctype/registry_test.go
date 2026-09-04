@@ -14,7 +14,7 @@ func TestLoadEmbedded(t *testing.T) {
 		t.Fatal(err)
 	}
 	want := []string{"adr", "architecture", "backup-dr", "brief", "changelog-product", "charter", "cr", "decision-log", "deployment",
-		"design-component", "design-foundations", "design-pattern", "design-tokens", "environment", "faq", "feature-spec", "glossary", "idea",
+		"design-component", "design-foundations", "design-pattern", "design-tokens", "environment", "faq", "feature-list", "feature-spec", "glossary", "idea",
 		"interview", "meeting-notes", "mockup", "monitoring", "plan", "plan-phase", "postmortem", "product-overview", "release-brief",
 		"release-notes", "report", "risk-register", "roadmap", "runbook", "test-case", "test-case-table", "test-report", "testing-strategy",
 		"ui-spec", "ui-test-checklist", "user-guide", "userflow", "wireframe"}

@@ -24,7 +24,7 @@ dk_version: {{.DKVersion}}
 
 ## 3. Tính năng theo mốc
 
-<!-- gợi ý: mã Feature Spec (F-xxx) hoặc tên brief khi chưa có spec; thứ tự trong mốc là thứ tự ưu tiên; cột Trạng thái lấy từ Feature catalog -->
+<!-- gợi ý: mã Feature Spec (F-xxx), hoặc mã tạm FL-xx của Feature list / tên brief khi chưa có spec; thứ tự trong mốc là thứ tự ưu tiên; cột Trạng thái lấy từ Feature catalog -->
 
 | Mốc | Mã | Tính năng | Trạng thái | Ghi chú |
 |---|---|---|---|---|

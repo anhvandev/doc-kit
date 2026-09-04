@@ -85,6 +85,16 @@ required = ["type", "title", "status", "owner", "created"]
 statuses = ["draft", "review", "approved"]
 warn_lines = 300
 
+[feature-list]
+dir = "overview"
+name = "feature-list.md"
+id = "none"
+description = "Feature list: bảng tính năng dự kiến tách từ Product brief đã duyệt; mã tạm FL-xx, nhóm, ưu tiên MoSCoW, dẫn mục brief; mỗi dòng đi tiếp qua intake tính năng"
+required = ["type", "title", "status", "owner", "created", "source"]
+statuses = ["draft", "review", "approved"]
+warn_lines = 200
+from.brief = { title = "title" }
+
 [adr]
 dir = "adr"
 name = "{id}-{slug}.md"

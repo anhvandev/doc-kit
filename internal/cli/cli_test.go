@@ -74,7 +74,7 @@ func TestTemplate(t *testing.T) {
 	dir := t.TempDir()
 	out, code := run(t, dir, "template", "list", "--json")
 	var infos []typeInfo
-	if code != 0 || json.Unmarshal([]byte(out), &infos) != nil || len(infos) != 41 {
+	if code != 0 || json.Unmarshal([]byte(out), &infos) != nil || len(infos) != 42 {
 		t.Fatalf("template list: %s (%d)", out, code)
 	}
 	out, code = run(t, dir, "template", "show", "feature-spec")
@@ -233,6 +233,26 @@ func TestEndToEnd(t *testing.T) {
 	}
 	if out, _ = run(t, dir, "changelog", "pending"); strings.Contains(out, "index.md") || strings.Contains(out, "html/") {
 		t.Fatalf("pending không được liệt kê html/ hay generated: %s", out)
+	}
+}
+
+// TestFeatureListFrom: feature-list chép title từ brief và source trỏ về brief.
+func TestFeatureListFrom(t *testing.T) {
+	dir := t.TempDir()
+	run(t, dir, "init")
+	out, code := run(t, dir, "new", "brief", "cua-hang", "--set", "title=Cửa hàng", "--set", "level=project", "--set", "kind=product", "--json")
+	var brief map[string]string
+	if code != 0 || json.Unmarshal([]byte(out), &brief) != nil {
+		t.Fatalf("new brief: %s", out)
+	}
+	out, code = run(t, dir, "new", "feature-list", "cua-hang", "--from", brief["path"], "--json")
+	var fl map[string]string
+	if code != 0 || json.Unmarshal([]byte(out), &fl) != nil || fl["path"] != "docs/overview/feature-list.md" {
+		t.Fatalf("new feature-list --from: %s", out)
+	}
+	b, _ := os.ReadFile(filepath.Join(dir, fl["path"]))
+	if !strings.Contains(string(b), "title: Cửa hàng") || !strings.Contains(string(b), "source: "+filepath.Base(filepath.Dir(brief["path"]))+"/brief.md") || !strings.Contains(string(b), "| Mã | Tên | Mô tả | Nhóm | Ưu tiên | Nguồn | Spec |") {
+		t.Fatalf("feature-list chép trường sai:\n%s", b)
 	}
 }
 
