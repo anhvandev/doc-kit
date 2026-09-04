@@ -12,6 +12,8 @@ import (
 
 	"github.com/spf13/cobra"
 
+	"github.com/anhvandev/doc-kit/assets"
+	"github.com/anhvandev/doc-kit/internal/agentctx"
 	"github.com/anhvandev/doc-kit/internal/config"
 	"github.com/anhvandev/doc-kit/internal/gitx"
 	"github.com/anhvandev/doc-kit/internal/hook"
@@ -85,6 +87,7 @@ func (a *app) runDoctor(cmd *cobra.Command, f targetFlags) error {
 		add("git", "có", true, "")
 		a.doctorPreCommit(add)
 	}
+	a.doctorAgentContext(add)
 
 	names := f.names()
 	// Không nêu --target mà dự án đã cài gì đó cho Codex (skill hoặc hook):
@@ -185,6 +188,34 @@ func (a *app) doctorPreCommit(add func(string, string, bool, string)) {
 		return
 	}
 	add("pre-commit", "có, gọi dk", true, "")
+}
+
+// doctorAgentContext kiểm khối ngữ cảnh agent trong từng file ngữ cảnh:
+// thiếu, cũ hay bị sửa tay đều sửa bằng `dk init --agent-context`.
+func (a *app) doctorAgentContext(add func(string, string, bool, string)) {
+	content, err := assets.FS.ReadFile("agent-context.md")
+	if err != nil {
+		add("agent context", err.Error(), false, "binary hỏng; cài lại dk")
+		return
+	}
+	for _, name := range agentctx.Files {
+		st, err := agentctx.Check(filepath.Join(a.root, name), content, Version)
+		item := "agent context (" + name + ")"
+		switch {
+		case err != nil:
+			add(item, err.Error(), false, "kiểm quyền đọc "+name)
+		case st == agentctx.StateOK:
+			add(item, "có, đúng phiên bản", true, "")
+		case st == agentctx.StateBroken:
+			add(item, "khối thiếu mốc đóng hoặc có nhiều hơn một khối", false, "sửa tay "+name+" rồi `dk init --agent-context`")
+		case st == agentctx.StateMissingFile:
+			add(item, "thiếu file", false, "`dk init --agent-context`")
+		case st == agentctx.StateMissing:
+			add(item, "có file, chưa có khối", false, "`dk init --agent-context`")
+		default: // outdated
+			add(item, "cũ hoặc bị sửa tay", false, "`dk init --agent-context`")
+		}
+	}
 }
 
 func (a *app) printDoctor(rows []doctorRow) error {

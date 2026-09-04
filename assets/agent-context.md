@@ -1,45 +1,69 @@
-## Tài liệu dự án: `dk`
+## Working rules
 
-Mọi tài liệu trong `docs/` do CLI `dk` tạo từ template nhúng; agent không tự tạo file
-tay ở đó. Ba lớp: **template** (khung, sửa bằng phát hành `dk` mới), **CLI** (việc xác
-định: tạo file, changelog, render, chỉ mục, kiểm tra), **skill** (việc cần suy luận:
-phỏng vấn, soạn nội dung, phân tích tác động). Thiếu `dk` thì dừng và báo người cài.
+**Do exactly what is asked. Nothing more, nothing less.** Bias toward caution over speed; use judgment on trivial tasks.
 
-### Skill (cài bằng `dk skill install`)
+### Think before coding
+- State assumptions explicitly. If uncertain, ask.
+- If several interpretations exist, present them; do not pick one silently.
+- If a simpler approach exists, say so and push back when warranted.
+- If something is unclear, stop, name what is confusing, and ask.
 
-| Skill | Dùng khi |
+### Simplicity first
+- Minimum code that solves the problem. No speculative features, abstractions, or configurability.
+- No error handling for impossible scenarios. Pick the practical option, not the elegant one.
+- If 200 lines could be 50, rewrite.
+
+### Surgical changes
+- Touch only what you must. Match existing style. Do not "improve" adjacent code or formatting.
+- Remove imports, variables, and functions that your change made unused; leave pre-existing dead code and mention it.
+- Every changed line should trace directly to the request.
+
+### Goal-driven execution
+- Turn tasks into verifiable goals: a failing test, a passing check, a reproducible command.
+- For multi-step work, state a brief plan with a verify step per item, then loop until verified.
+
+### Answer the instruction, nothing else
+- Lead with the result. Short sentences, plain words, one solution, no menus of alternatives.
+- No tips, warnings, "also consider", or next steps unless asked. No closing summary.
+- Do not spawn subagents for work you can do directly.
+
+**When in doubt, ask. Do not guess and do not expand scope.**
+
+## Project documentation: `dk`
+
+Every document under `docs/` is created by the `dk` CLI from embedded templates; never create files there by hand. Three layers: **templates** (structure, changed only by releasing a new `dk`), **CLI** (deterministic work: create files, changelog, render, index, check), **skills** (work that needs reasoning: interviews, drafting, impact analysis). If `dk` is missing or fails, stop and tell the user to install it.
+
+### Skills (installed with `dk skill install`)
+
+| Skill | Use when |
 |---|---|
-| `doc-intake` | ý tưởng mới chưa có gì: idea, phỏng vấn, brief chờ duyệt (`docs/intake/`) |
-| `doc-cr` | thay đổi trên thứ đã có: Change Request, bảng tác động chờ duyệt (`docs/cr/`) |
+| `doc-intake` | a new idea with nothing written yet: idea, interview, brief awaiting approval (`docs/intake/`) |
+| `doc-cr` | a change to something that exists: Change Request with impact table awaiting approval (`docs/cr/`) |
 | `doc-overview` | Product overview, Architecture overview, Glossary (`docs/overview/`) |
-| `doc-adr` | quyết định kỹ thuật lớn, đánh số, bất biến sau khi chốt (`docs/adr/`) |
-| `doc-feature-spec` | Feature Spec 11 mục từ brief đã duyệt hoặc CR đã chốt (`docs/features/`) |
-| `doc-design-system` | tokens, foundations, atoms đến templates, patterns (`docs/design/`) |
-| `doc-design-flow` | user flow, wireframe, mockup HTML, prototype cho một tính năng |
-| `doc-test` | testing strategy, test case Gherkin hoặc bảng, checklist UI, test report (`docs/test/`) |
-| `doc-plan-report` | roadmap, plan và phase, report có bằng chứng, decision log, CHANGELOG sản phẩm |
-| `doc-release` | release brief, release notes, user guide, FAQ cho người dùng cuối (`docs/release/`) |
-| `doc-ops` | deployment, environment, runbook, monitoring, postmortem, backup và DR (`docs/ops/`) |
+| `doc-adr` | a significant technical decision, numbered, immutable once accepted (`docs/adr/`) |
+| `doc-feature-spec` | 11-section Feature Spec from an approved brief or accepted CR (`docs/features/`) |
+| `doc-design-system` | tokens, foundations, atoms through templates, patterns (`docs/design/`) |
+| `doc-design-flow` | user flow, wireframe, HTML mockup, prototype for one feature |
+| `doc-test` | testing strategy, Gherkin or table test cases, UI checklist, test report (`docs/test/`) |
+| `doc-plan-report` | roadmap, plan and phases, evidence-backed report, decision log, product CHANGELOG |
+| `doc-release` | release brief, release notes, user guide, FAQ for end users (`docs/release/`) |
+| `doc-ops` | deployment, environment, runbook, monitoring, postmortem, backup and DR (`docs/ops/`) |
 
-### Lệnh `dk` chính
+### Main `dk` commands
 
 ```
-dk new <loại> <slug> [--from <file>] [--set k=v]   # tạo file từ template, điền frontmatter
-dk changelog add <file> --summary "<tóm tắt thật>" --source <CR-id|brief>
-dk render <file> | --all --index                    # HTML tự chứa vào docs/html/
-dk index [features|adr|cr|intake|user-guide|all]    # README.md chỉ mục sinh ra
-dk check [<file>]                                   # mã thoát 3 khi có lỗi
-dk refs <file>                                      # liên kết đi và đến
-dk status | dk doctor                               # tổng quan tài liệu | kiểm cài đặt
+dk new <type> <slug> [--from <file>] [--set k=v]    # create from template, fill frontmatter
+dk changelog add <file> --summary "<real summary>" --source <CR-id|brief>
+dk render <file> | --all --index                    # self-contained HTML into docs/html/
+dk index [features|adr|cr|intake|user-guide|all]    # generated README.md indexes
+dk check [<file>]                                   # exit code 3 on errors
+dk refs <file>                                      # outgoing and incoming links
+dk status | dk doctor                               # docs overview | installation check
 ```
 
-### Quy tắc
+### Documentation rules
 
-- Sau mỗi lần sửa một tài liệu: `changelog add` với tóm tắt nói nội dung, `render`,
-  `index` thư mục đó, `check` file đó. Pre-commit chặn commit khi thiếu dòng changelog.
-- Trạng thái dùng khóa tiếng Anh của `types.toml` (`draft`, `review`, `approved`...);
-  chỉ người đổi sang trạng thái đã chốt. Skill dừng ở "chờ duyệt".
-- Không sửa `created`, `created_by`, `dk_version` trong frontmatter; không sửa thân
-  ADR đã `accepted`; không sửa file `generated: true` hay `docs/html/`.
-- Ngưỡng dòng: cảnh báo trên 500, lỗi trên 800 (`dk.toml` `[check]`); loại có ngưỡng
-  riêng ghi trong `types.toml`.
+- After every edit to a document: `changelog add` with a summary that describes the content, `render`, `index` for that directory, `check` for that file. The pre-commit hook blocks commits that lack a changelog line.
+- Statuses use the English keys from `types.toml` (`draft`, `review`, `approved`, ...). Only a person moves a document to a final status; skills stop at "awaiting approval".
+- Never edit `created`, `created_by`, `dk_version` in frontmatter; never edit the body of an ADR that is `accepted`; never edit files marked `generated: true` or anything under `docs/html/`.
+- Line limits: warning above 500, error above 800 (`dk.toml` `[check]`); per-type limits live in `types.toml`.

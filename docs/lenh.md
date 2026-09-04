@@ -7,9 +7,9 @@ Mọi lệnh nhận `--json` và `--cwd <dir>`. Mã thoát: 0 thành công, 1 l�
 |---|---|
 | `dk --version` | phiên bản; `go install` lấy từ build info |
 | `dk self-check` | phiên bản, số template, số skill, target, sha256 nội dung nhúng; mã 1 khi template hoặc skill nhúng hỏng |
-| `dk doctor [--target claude,codex] [--global]` | bảng `mục \| trạng thái \| cách sửa`: `dk.toml`, `docs/`, `dk` trên PATH, git, pre-commit, từng skill sai phiên bản, hook theo từng target (nhãn dòng `skill (claude, dự án)`, `hook (codex, toàn máy)`, `skill doc-x (claude)`; đổi từ `v0.2.0`); không nêu `--target` mà có `.codex/skills/` hoặc `.codex/hooks.json` thì kiểm cả Codex; target lạ vẫn in bảng, mã 3 |
+| `dk doctor [--target claude,codex] [--global]` | bảng `mục \| trạng thái \| cách sửa`: `dk.toml`, `docs/`, `dk` trên PATH, git, pre-commit, khối ngữ cảnh agent trong `CLAUDE.md` và `AGENTS.md` (thiếu file; có file chưa có khối; cũ hoặc bị sửa tay; khối thiếu mốc đóng hoặc nhiều hơn một khối), từng skill sai phiên bản, hook theo từng target (nhãn dòng `skill (claude, dự án)`, `hook (codex, toàn máy)`, `skill doc-x (claude)`; đổi từ `v0.2.0`); không nêu `--target` mà có `.codex/skills/` hoặc `.codex/hooks.json` thì kiểm cả Codex; target lạ vẫn in bảng, mã 3 |
 | `dk init [--force]` | `dk.toml`, cây `docs/`, `docs/CHANGELOG-DOCS.md`, `plans/`, pre-commit khi có git; `--force` giữ `dk.toml` cũ, chỉ bổ sung; từ chối tạo dự án lồng nhau |
-| `dk init --agent-context` | in khối Markdown (dưới 60 dòng) để dán vào `CLAUDE.md` hoặc `AGENTS.md`; không ghi file |
+| `dk init --agent-context` | ghi `assets/agent-context.md` (tiếng Anh, dưới 120 dòng) vào `CLAUDE.md` và `AGENTS.md` ở gốc dự án (có `dk.toml`) hoặc thư mục hiện tại giữa `<!-- dk:agent-context start version=… hash=… -->` và `<!-- dk:agent-context end -->`; file chưa có thì tạo, có khối thì thay tại chỗ, chưa có khối thì nối cuối; phần ngoài khối giữ nguyên; in `created`, `updated`, `unchanged` từng file; không cần `dk.toml` |
 | `dk template list \| show <loại>` | bảng loại (41) và template thô |
 | `dk new <loại> <slug> [--from <file>] [--set k=v] [--force]` | tạo file từ template, điền frontmatter, chép trường theo `from` của `types.toml` |
 | `dk new plan-phase \| report <slug> --in <thư mục plan>` | file trong `plans/` (`plans_dir` của `dk.toml`); `--in plans` cho `plans/reports/` |
@@ -17,7 +17,7 @@ Mọi lệnh nhận `--json` và `--cwd <dir>`. Mã thoát: 0 thành công, 1 l�
 | `dk new release-notes --collect <phiên bản>` | gom Release brief `ready` chưa có `released_in`, ghi `released_in` vào từng brief |
 | `dk changelog add <file> --summary <s> [--source <src>]` | bump `updated:`, đếm `git diff --numstat HEAD`, ghi dòng; gộp với dòng cùng file cùng nguồn trong 10 phút |
 | `dk changelog pending` | mã 1 khi còn file trong `docs/` đổi mà chưa có dòng từ phút của commit HEAD |
-| `dk render <file> \| --all [--index]` | HTML tự chứa vào `docs/html/`; `--index` thêm `docs/html/index.html` |
+| `dk render <file> \| --all [--index]` | HTML tự chứa vào `docs/html/`; cột phải có bảng metadata và mục lục (tiêu đề cấp 2, 3 ở mức đầu tài liệu, bỏ tiêu đề trong danh sách hay trích dẫn; chỉ hiện khi có từ 3 tiêu đề; trang chỉ mục không có); `--index` thêm `docs/html/index.html` |
 | `dk index [features\|adr\|cr\|intake\|user-guide\|all]` | `README.md` chỉ mục (`generated: true`) trong từng thư mục |
 | `dk check [<file>] [--strict]` | 16 quy tắc (xem `docs/skill.md`); `--strict` coi warning là lỗi |
 | `dk refs <file>` | liên kết đi và đến |

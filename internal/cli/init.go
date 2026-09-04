@@ -9,6 +9,7 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/anhvandev/doc-kit/assets"
+	"github.com/anhvandev/doc-kit/internal/agentctx"
 	"github.com/anhvandev/doc-kit/internal/changelog"
 	"github.com/anhvandev/doc-kit/internal/config"
 	"github.com/anhvandev/doc-kit/internal/gitx"
@@ -33,28 +34,59 @@ func newInitCmd(a *app) *cobra.Command {
 		Args:  exactArgs(0),
 		RunE: func(_ *cobra.Command, _ []string) error {
 			if agentContext {
-				return a.printAgentContext()
+				return a.writeAgentContext()
 			}
 			return a.runInit(force)
 		},
 	}
 	cmd.Flags().BoolVar(&force, "force", false, "ghi đè dk.toml nếu đã có")
-	cmd.Flags().BoolVar(&agentContext, "agent-context", false, "chỉ in khối Markdown để dán vào file ngữ cảnh agent, không ghi gì")
+	cmd.Flags().BoolVar(&agentContext, "agent-context", false, "ghi khối ngữ cảnh agent vào CLAUDE.md và AGENTS.md tại thư mục hiện tại, không đụng phần còn lại của file")
 	return cmd
 }
 
-// printAgentContext in template nhúng ra stdout; người tự dán vào CLAUDE.md
-// hoặc AGENTS.md, dk không sửa file đó.
-func (a *app) printAgentContext() error {
-	b, err := assets.FS.ReadFile("agent-context.md")
+// agentContextResult là kết quả ghi một file ngữ cảnh agent.
+type agentContextResult struct {
+	File   string `json:"file"`
+	Result string `json:"result"` // created, updated, unchanged
+}
+
+// writeAgentContext ghi khối nhúng vào CLAUDE.md và AGENTS.md ở gốc dự án
+// (có dk.toml) hoặc thư mục hiện tại khi chưa init, giữa hai dấu mốc; chạy
+// lại thay đúng khối cũ, giữ phần còn lại. Kiểm cả hai file trước khi ghi để
+// một file hỏng không để file kia đã bị đổi.
+func (a *app) writeAgentContext() error {
+	content, err := assets.FS.ReadFile("agent-context.md")
 	if err != nil {
 		return fail(codeError, "%v", err)
 	}
-	if a.json {
-		return a.printJSON(map[string]string{"content": string(b)})
+	dir := a.cwd
+	if root, ok := findProjectRoot(a.cwd); ok {
+		dir = root
 	}
-	_, err = a.out.Write(b)
-	return err
+	for _, name := range agentctx.Files {
+		st, err := agentctx.Check(filepath.Join(dir, name), content, Version)
+		if err != nil {
+			return fail(codeError, "%v", err)
+		}
+		if st == agentctx.StateBroken {
+			return fail(codeError, "%s: khối thiếu mốc đóng hoặc có nhiều hơn một khối; sửa tay rồi chạy lại", filepath.Join(dir, name))
+		}
+	}
+	var results []agentContextResult
+	for _, name := range agentctx.Files {
+		r, err := agentctx.Write(filepath.Join(dir, name), content, Version)
+		if err != nil {
+			return fail(codeError, "%v", err)
+		}
+		results = append(results, agentContextResult{File: name, Result: r})
+	}
+	if a.json {
+		return a.printJSON(results)
+	}
+	for _, r := range results {
+		a.printf("%s: %s\n", filepath.Join(dir, r.File), r.Result)
+	}
+	return nil
 }
 
 func (a *app) runInit(force bool) error {

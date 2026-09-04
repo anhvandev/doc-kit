@@ -37,9 +37,12 @@ template, không có skill: tài liệu quản trị do người viết.
 
 ## Khối ngữ cảnh agent
 
-`dk init --agent-context` in `assets/agent-context.md` (dưới 60 dòng): bảng skill, lệnh
-`dk` chính, quy tắc ba lớp, ngưỡng dòng. Người dán vào `CLAUDE.md` hoặc `AGENTS.md`;
-`dk` không tự sửa file đó.
+`dk init --agent-context` ghi `assets/agent-context.md` (tiếng Anh, dưới 120 dòng) vào
+`CLAUDE.md` và `AGENTS.md`: quy tắc làm việc chung của agent (nghĩ trước khi code, tối
+giản, sửa đúng chỗ, mục tiêu kiểm được, trả lời đúng câu hỏi) rồi phần `dk` (ba lớp,
+bảng skill, lệnh chính, quy tắc tài liệu, ngưỡng dòng). Khối nằm giữa hai dấu mốc HTML
+comment mang phiên bản `dk` và hash nội dung (`internal/agentctx`); chạy lại thay đúng
+khối, phần còn lại của file giữ nguyên; `dk doctor` báo khối thiếu, cũ hay bị sửa tay.
 
 ## 16 quy tắc của `dk check`
 

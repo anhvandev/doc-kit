@@ -12,7 +12,7 @@ binary dk (Go)
   ├── assets/skills/         SKILL.md + references/rules.md của 11 skill
   ├── assets/html/           khung trang, CSS, mermaid.min.js
   ├── assets/hooks/          script pre-commit
-  └── assets/agent-context.md  khối dán vào file ngữ cảnh agent (dk init --agent-context)
+  └── assets/agent-context.md  khối ghi vào CLAUDE.md, AGENTS.md (dk init --agent-context)
         ▲ gọi
 .claude/skills/doc-*/        bản do dk cài ra (Codex: .codex/skills/)
 ```

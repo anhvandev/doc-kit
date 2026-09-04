@@ -8,26 +8,67 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/anhvandev/doc-kit/assets"
+	"github.com/anhvandev/doc-kit/internal/agentctx"
 	"github.com/anhvandev/doc-kit/internal/skill"
 )
 
 func TestInitAgentContext(t *testing.T) {
 	dir := t.TempDir()
-	out, code := run(t, dir, "init", "--agent-context")
-	if code != 0 {
-		t.Fatalf("mã %d", code)
+	// CLAUDE.md đã có nội dung riêng; AGENTS.md chưa có.
+	if err := os.WriteFile(filepath.Join(dir, "CLAUDE.md"), []byte("# Dự án\n\nghi chú riêng\n"), 0o644); err != nil {
+		t.Fatal(err)
 	}
-	if n := len(strings.Split(strings.TrimRight(out, "\n"), "\n")); n >= 60 {
-		t.Fatalf("khối agent context %d dòng, phải dưới 60", n)
+	out, code := run(t, dir, "init", "--agent-context", "--json")
+	if code != 0 {
+		t.Fatalf("mã %d: %s", code, out)
+	}
+	var res []agentContextResult
+	if json.Unmarshal([]byte(out), &res) != nil || len(res) != 2 ||
+		res[0].File != "CLAUDE.md" || res[0].Result != agentctx.WriteUpdated ||
+		res[1].File != "AGENTS.md" || res[1].Result != agentctx.WriteCreated {
+		t.Fatalf("%s", out)
+	}
+	if _, err := os.Stat(filepath.Join(dir, "dk.toml")); err == nil {
+		t.Fatal("--agent-context không được tạo dk.toml")
+	}
+
+	b, _ := os.ReadFile(filepath.Join(dir, "CLAUDE.md"))
+	s := string(b)
+	if !strings.HasPrefix(s, "# Dự án\n\nghi chú riêng\n\n<!-- dk:agent-context start version=dev hash=") || !strings.HasSuffix(s, "<!-- dk:agent-context end -->\n") {
+		t.Fatalf("CLAUDE.md:\n%s", s)
+	}
+	content, _ := assets.FS.ReadFile("agent-context.md")
+	if n := len(strings.Split(strings.TrimRight(string(content), "\n"), "\n")); n >= 120 {
+		t.Fatalf("khối agent context %d dòng, phải dưới 120", n)
 	}
 	metas, _ := skill.List()
 	for _, m := range metas {
-		if !strings.Contains(out, "`"+m.Name+"`") {
+		if !strings.Contains(s, "`"+m.Name+"`") {
 			t.Errorf("thiếu skill %s trong bảng", m.Name)
 		}
 	}
-	if _, err := os.Stat(filepath.Join(dir, "dk.toml")); err == nil {
-		t.Fatal("--agent-context không được ghi file")
+
+	// Chạy lại: không đổi, không nhân đôi khối.
+	out, _ = run(t, dir, "init", "--agent-context")
+	if out != filepath.Join(dir, "CLAUDE.md")+": unchanged\n"+filepath.Join(dir, "AGENTS.md")+": unchanged\n" {
+		t.Fatalf("chạy lại: %s", out)
+	}
+	b2, _ := os.ReadFile(filepath.Join(dir, "CLAUDE.md"))
+	if string(b2) != s {
+		t.Fatal("chạy lại làm đổi CLAUDE.md")
+	}
+
+	// Đã có dk.toml: chạy từ thư mục con vẫn ghi ở gốc dự án, khớp nơi doctor kiểm.
+	if _, code := run(t, dir, "init"); code != 0 {
+		t.Fatal("init")
+	}
+	sub := filepath.Join(dir, "docs", "features")
+	if out, code := run(t, sub, "init", "--agent-context"); code != 0 || !strings.Contains(out, filepath.Join(dir, "CLAUDE.md")+": unchanged") {
+		t.Fatalf("từ thư mục con: %s", out)
+	}
+	if _, err := os.Stat(filepath.Join(sub, "CLAUDE.md")); err == nil {
+		t.Fatal("ghi nhầm vào thư mục con")
 	}
 }
 
@@ -88,7 +129,7 @@ func TestDoctor(t *testing.T) {
 	}
 
 	git(t, dir, "init", "-q")
-	for _, args := range [][]string{{"init"}, {"skill", "install"}, {"hook", "install"}} {
+	for _, args := range [][]string{{"init"}, {"init", "--agent-context"}, {"skill", "install"}, {"hook", "install"}} {
 		if out, code := run(t, dir, args...); code != 0 {
 			t.Fatalf("%v: %s", args, out)
 		}
@@ -97,7 +138,7 @@ func TestDoctor(t *testing.T) {
 	if code != 0 {
 		t.Fatalf("đủ cài đặt vẫn lỗi: %+v", rows)
 	}
-	for _, item := range []string{"dk.toml", "docs/", "dk trên PATH", "git", "pre-commit", "skill (claude, dự án)", "hook (claude, dự án)"} {
+	for _, item := range []string{"dk.toml", "docs/", "dk trên PATH", "git", "pre-commit", "agent context (CLAUDE.md)", "agent context (AGENTS.md)", "skill (claude, dự án)", "hook (claude, dự án)"} {
 		if r := rowOfDoctor(rows, item); !r.OK {
 			t.Errorf("%s: %+v", item, r)
 		}
@@ -121,15 +162,25 @@ func TestDoctor(t *testing.T) {
 	if _, code := run(t, dir, "hook", "uninstall"); code != 0 {
 		t.Fatal("hook uninstall")
 	}
+	agents := filepath.Join(dir, "AGENTS.md")
+	b, _ = os.ReadFile(agents)
+	if err := os.WriteFile(agents, []byte(strings.Replace(string(b), "## Working rules", "## Rules", 1)), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Remove(filepath.Join(dir, "CLAUDE.md")); err != nil {
+		t.Fatal(err)
+	}
 	rows, code = doctor(t, dir)
 	if code != 3 {
 		t.Fatalf("phải mã 3: %+v", rows)
 	}
 	cases := map[string]string{
-		"pre-commit":             "dk init --force",
-		"skill doc-adr (claude)": "--force",
-		"skill doc-cr (claude)":  "dk skill install doc-cr",
-		"hook (claude, dự án)":   "dk hook install",
+		"pre-commit":                "dk init --force",
+		"skill doc-adr (claude)":    "--force",
+		"skill doc-cr (claude)":     "dk skill install doc-cr",
+		"hook (claude, dự án)":      "dk hook install",
+		"agent context (AGENTS.md)": "dk init --agent-context",
+		"agent context (CLAUDE.md)": "dk init --agent-context",
 	}
 	for item, fix := range cases {
 		r := rowOfDoctor(rows, item)

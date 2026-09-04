@@ -36,8 +36,8 @@ cd du-an
 dk init                 # dk.toml, docs/, docs/CHANGELOG-DOCS.md, plans/, pre-commit; không đụng .claude/
 dk skill install        # 11 skill vào .claude/skills/, dấu vết dk_* trong frontmatter
 dk hook install         # 2 hook vào .claude/settings.json, giữ nguyên khóa khác
-dk init --agent-context # in khối Markdown; dán vào CLAUDE.md hoặc AGENTS.md của dự án
-dk doctor               # kiểm dk.toml, git, pre-commit, dk trên PATH, skill đúng phiên bản, hook
+dk init --agent-context # ghi khối quy tắc (tiếng Anh) vào CLAUDE.md và AGENTS.md giữa hai dấu mốc; chạy lại chỉ thay khối
+dk doctor               # kiểm dk.toml, git, pre-commit, dk trên PATH, khối ngữ cảnh agent, skill đúng phiên bản, hook
 ```
 
 Mặc định target `claude`, scope dự án; `--global` cài vào `~/.claude/`. Codex: thêm
