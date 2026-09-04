@@ -27,6 +27,10 @@ flowchart TD
     H -->|doc-ops| I[Vận hành]
 ```
 
+Cấp dự án: sau khi Product brief `approved`, gọi `doc-feature-list` để có bảng tính năng dự
+kiến (`docs/overview/feature-list.md`); mỗi dòng của bảng là một lượt `doc-intake` cấp tính
+năng theo thứ tự ưu tiên.
+
 Thứ tự thật khi chạy: intake → duyệt brief → design flow → spec → test → plan → release.
 Design flow và spec có thể đổi chỗ; `dk check` báo lỗi `userflow-steps` cho đến khi spec
 xuất hiện, đó là lỗi tạm, không cần sửa tay.
@@ -44,6 +48,7 @@ skill ghi `--source <CR-id>` vào changelog và đổi `source` của tài liệ
 |---|---|---|---|
 | Có ý tưởng mới, chưa có gì | `doc-intake` | "Tôi có ý tưởng: ..." | Trả lời phỏng vấn từng trường "chưa rõ"; duyệt brief |
 | Dự án mới, chưa có tài liệu nền | `doc-intake` cấp `project`, rồi `doc-overview` | "Lập Product brief cho dự án" | Duyệt Product brief; đọc Architecture overview sinh từ mã |
+| Product brief đã `approved`, chưa biết có những tính năng gì | `doc-feature-list` | "Dựng feature list từ Product brief" | Duyệt bảng: bỏ dòng bịa, quyết mục Chưa rõ, đổi `status: approved`; rồi gọi `doc-intake` cho từng dòng theo ưu tiên |
 | Giao diện chưa có design system | `doc-intake` kind `design`, rồi `doc-design-system` | "Lập Design brief" | Duyệt brief; duyệt từng lớp tokens, atoms, organisms |
 | Brief đã `approved` | `doc-feature-spec` | "Soạn Feature Spec từ brief <thư mục>" | Chọn `format` nếu agent hỏi; duyệt spec |
 | Spec đã `approved`, có giao diện | `doc-design-flow` | "Làm user flow và mockup cho F-xxx" | Duyệt flow trước wireframe, wireframe trước mockup |
@@ -57,7 +62,7 @@ skill ghi `--source <CR-id>` vào changelog và đổi `source` của tài liệ
 ## Lần đầu với dự án mới
 
 1. `dk init`, `dk skill install`, `dk hook install`, `dk init --agent-context`, `dk doctor`.
-2. `doc-intake` cấp `project` kind `product`, duyệt, rồi `doc-overview`.
+2. `doc-intake` cấp `project` kind `product`, duyệt, rồi `doc-overview` và `doc-feature-list`.
 3. Có giao diện: `doc-intake` kind `design`, duyệt, rồi `doc-design-system` theo từng lớp.
 4. Tính năng đầu tiên theo vòng đời ở trên.
 

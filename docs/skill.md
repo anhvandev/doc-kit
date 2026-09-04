@@ -1,6 +1,6 @@
 # Skill và quy tắc kiểm tra
 
-## 11 skill nhúng
+## 12 skill nhúng
 
 Cài bằng `dk skill install` (mặc định target `claude`, scope dự án; `--global` vào
 `~/.claude/`). Mỗi skill: `SKILL.md` dưới 300 dòng, `references/rules.md`, bước 0 kiểm
@@ -11,6 +11,7 @@ Cài bằng `dk skill install` (mặc định target `claude`, scope dự án; `
 | `doc-intake` | `docs/intake/<yymmdd>-<slug>/` | idea, interview, brief (Intake, Product, Design) | brief `review` |
 | `doc-cr` | `docs/cr/` | CR với bảng tác động từ `dk refs`, interview khi cần | bảng tác động `review` |
 | `doc-overview` | `docs/overview/` | Product overview từ Product brief, Architecture từ mã, Glossary; Feature catalog bằng `dk index features` | brief chưa `approved` |
+| `doc-feature-list` | `docs/overview/` | Feature list: bảng tính năng tách từ Product brief, mã tạm `FL-xx`, nhóm, ưu tiên MoSCoW, cột Spec | list `review`; brief chưa `approved` |
 | `doc-adr` | `docs/adr/` | ADR đánh số, thân bất biến sau `accepted`, thay bằng ADR mới | ADR `proposed` |
 | `doc-feature-spec` | `docs/features/` | Feature Spec 11 mục, 5 biến thể `format` | spec `review`; chỉ sửa theo CR `approved` |
 | `doc-design-system` | `docs/design/` | tokens, foundations, atoms đến templates, patterns | Design brief chưa `approved` |

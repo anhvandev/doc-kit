@@ -1,6 +1,6 @@
 # Kiến trúc `dk`
 
-Binary Go duy nhất nhúng template tài liệu, bảng loại, khung HTML và 11 skill. Không gọi
+Binary Go duy nhất nhúng template tài liệu, bảng loại, khung HTML và 12 skill. Không gọi
 mạng lúc chạy, không dependency trên máy đích ngoài `git` (tùy chọn, để đếm dòng changelog).
 
 ## Ba lớp
@@ -9,7 +9,7 @@ mạng lúc chạy, không dependency trên máy đích ngoài `git` (tùy chọ
 binary dk (Go)
   ├── assets/templates/      template tài liệu, chỉ đọc, nhúng bằng embed
   ├── assets/types.toml      bảng loại: thư mục, tên file, mã, trường bắt buộc, trạng thái, from
-  ├── assets/skills/         SKILL.md + references/rules.md của 11 skill
+  ├── assets/skills/         SKILL.md + references/rules.md của 12 skill
   ├── assets/html/           khung trang, CSS, mermaid.min.js
   ├── assets/hooks/          script pre-commit
   └── assets/agent-context.md  khối ghi vào CLAUDE.md, AGENTS.md (dk init --agent-context)
