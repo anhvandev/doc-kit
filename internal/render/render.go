@@ -39,9 +39,20 @@ type Page struct {
 
 type metaRow struct{ Key, Value string }
 
+// tocItem là một dòng mục lục: tiêu đề cấp 2 hoặc 3 và id neo goldmark đã gán.
+type tocItem struct {
+	Level int
+	ID    string
+	Text  string
+}
+
+// tocMin là số tiêu đề tối thiểu để hiện mục lục; ít hơn thì trang tự đủ ngắn.
+const tocMin = 3
+
 type pageData struct {
 	Title      string
 	Meta       []metaRow
+	TOC        []tocItem
 	Body       template.HTML
 	CSS        template.CSS
 	HasMermaid bool
@@ -122,7 +133,7 @@ func (o Options) Render(m docs.Meta) (Page, error) {
 	if title == "" {
 		title = filepath.Base(m.Path)
 	}
-	data := pageData{Title: title, Meta: metaRows(m.FM), Body: template.HTML(body.String()), CSS: cssText, HasMermaid: nr.hasMermaid}
+	data := pageData{Title: title, Meta: metaRows(m.FM), TOC: toc(doc, m.Body), Body: template.HTML(body.String()), CSS: cssText, HasMermaid: nr.hasMermaid}
 	if nr.hasMermaid {
 		data.Mermaid = jsText
 	}
@@ -154,6 +165,25 @@ func metaRows(fm *yaml.Node) []metaRow {
 		rows = append(rows, metaRow{Key: fm.Content[i].Value, Value: s})
 	}
 	return rows
+}
+
+// toc gom tiêu đề cấp 2 và 3 ở mức đầu tài liệu (cấp 1 là tiêu đề trang, cấp
+// 4 trở xuống quá chi tiết); dưới tocMin mục trả về nil để không hiện mục lục.
+func toc(doc ast.Node, src []byte) []tocItem {
+	var items []tocItem
+	for n := doc.FirstChild(); n != nil; n = n.NextSibling() {
+		h, ok := n.(*ast.Heading)
+		if !ok || h.Level < 2 || h.Level > 3 {
+			continue
+		}
+		id, _ := h.AttributeString("id")
+		idb, _ := id.([]byte)
+		items = append(items, tocItem{Level: h.Level, ID: string(idb), Text: nodeText(h, src)})
+	}
+	if len(items) < tocMin {
+		return nil
+	}
+	return items
 }
 
 func firstHeading(doc ast.Node, src []byte) string {

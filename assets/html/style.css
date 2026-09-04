@@ -63,6 +63,12 @@ pre.mermaid svg { max-width: 100%; height: auto; }
 .meta td { border: 0; word-break: break-word; }
 .meta tbody tr:nth-child(even) { background: none; }
 .meta .id { font-family: var(--mono); }
+.meta table + .toc { margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--rule); }
+.toc ul { list-style: none; margin: 0; padding: 0; }
+.toc li { margin: 0.2rem 0; line-height: 1.35; }
+.toc li.l3 { padding-left: 1rem; font-size: 0.95em; }
+.toc a { color: var(--ink-soft); text-decoration: none; }
+.toc a:hover { color: var(--accent); text-decoration: underline; }
 .status { display: inline-block; padding: 0.05em 0.5em; border: 1px solid var(--accent); border-radius: 3px; color: var(--accent); font-family: var(--mono); font-size: 0.85em; }
 
 .page.index { grid-template-columns: minmax(0, 96ch); }

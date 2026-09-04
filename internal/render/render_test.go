@@ -102,6 +102,63 @@ func TestSpecMermaidStepsLinks(t *testing.T) {
 	}
 }
 
+func TestTOC(t *testing.T) {
+	root := t.TempDir()
+	docsDir := filepath.Join(root, "docs")
+	if err := os.MkdirAll(docsDir, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	write := func(name, body string) docs.Meta {
+		src := filepath.Join(docsDir, name)
+		if err := os.WriteFile(src, []byte(body), 0o644); err != nil {
+			t.Fatal(err)
+		}
+		m, err := docs.Read(root, src)
+		if err != nil {
+			t.Fatal(err)
+		}
+		return m
+	}
+	opts := Options{DocsDir: docsDir, OutDir: filepath.Join(docsDir, "html")}
+
+	// Đủ tiêu đề: mục lục cấp 2 và 3 theo thứ tự, id trùng goldmark, bỏ cấp 1 và 4.
+	long := "# Tiêu đề\n\n## 1. Mục đích\n\n### 1.1 Chi tiết `mã`\n\n#### Bỏ qua\n\n## 2. Phạm vi\n\n## 2. Phạm vi\n"
+	p, err := opts.Render(write("long.md", long))
+	if err != nil {
+		t.Fatal(err)
+	}
+	h := string(p.HTML)
+	want := "<nav class=\"toc\" aria-label=\"Mục lục\">\n<ul>\n" +
+		"<li class=\"l2\"><a href=\"#1-mc-ch\">1. Mục đích</a></li>\n" +
+		"<li class=\"l3\"><a href=\"#11-chi-tit-m\">1.1 Chi tiết mã</a></li>\n" +
+		"<li class=\"l2\"><a href=\"#2-phm-vi\">2. Phạm vi</a></li>\n" +
+		"<li class=\"l2\"><a href=\"#2-phm-vi-1\">2. Phạm vi</a></li>\n</ul>\n</nav>"
+	if !strings.Contains(h, want) {
+		t.Fatalf("mục lục sai:\n%s", h)
+	}
+	if strings.Contains(h, "Bỏ qua</a>") || strings.Contains(h, "Tiêu đề</a>") {
+		t.Fatal("mục lục không được có cấp 1 hoặc cấp 4")
+	}
+	for _, id := range []string{`id="1-mc-ch"`, `id="2-phm-vi-1"`} {
+		if !strings.Contains(h, id) {
+			t.Fatalf("thân thiếu neo %s", id)
+		}
+	}
+	// Không frontmatter vẫn có aside vì có mục lục.
+	if !strings.Contains(h, "<aside class=\"meta\">\n<nav") {
+		t.Fatal("aside phải có khi chỉ có mục lục, không có bảng metadata")
+	}
+
+	// Dưới 3 tiêu đề: không mục lục.
+	p, err = opts.Render(write("short.md", "# T\n\n## A\n\n## B\n"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if strings.Contains(string(p.HTML), `class="toc"`) {
+		t.Fatal("dưới 3 tiêu đề không được có mục lục")
+	}
+}
+
 func TestStepCodes(t *testing.T) {
 	b, _ := os.ReadFile(filepath.Join("testdata", "spec.md"))
 	_, body, _ := splitFM(b)

@@ -13,13 +13,18 @@
 <main>
 {{.Body}}
 </main>
-{{if .Meta}}<aside class="meta" aria-label="Metadata">
-<table>
+{{if or .Meta .TOC}}<aside class="meta">
+{{if .Meta}}<table>
 <tbody>
 {{range .Meta}}<tr><th scope="row">{{.Key}}</th><td{{if eq .Key "id"}} class="id"{{end}}>{{if eq .Key "status"}}<span class="status">{{.Value}}</span>{{else}}{{.Value}}{{end}}</td></tr>
 {{end}}</tbody>
 </table>
-</aside>{{end}}
+{{end}}{{if .TOC}}<nav class="toc" aria-label="Mục lục">
+<ul>
+{{range .TOC}}<li class="l{{.Level}}"><a href="#{{.ID}}">{{.Text}}</a></li>
+{{end}}</ul>
+</nav>
+{{end}}</aside>{{end}}
 </div>
 {{if .HasMermaid}}<script>
 {{.Mermaid}}
