@@ -191,7 +191,7 @@ func TestDoctor(t *testing.T) {
 	if r := rowOfDoctor(rows, "skill doc-cr (claude)"); !strings.Contains(r.Status, "cũ (v0.0.1)") {
 		t.Errorf("doc-cr: %+v", r)
 	}
-	if r := rowOfDoctor(rows, "skill (claude, dự án)"); r.OK || !strings.Contains(r.Status, "9/11") {
+	if r := rowOfDoctor(rows, "skill (claude, dự án)"); r.OK || !strings.Contains(r.Status, "10/12") {
 		t.Errorf("tổng skill: %+v", r)
 	}
 

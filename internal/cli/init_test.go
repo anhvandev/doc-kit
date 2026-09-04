@@ -68,9 +68,9 @@ func TestInstallEndToEnd(t *testing.T) {
 	}
 	out, code = run(t, dir, "skill", "status", "--json")
 	var rows []skill.Row
-	if code != 0 || json.Unmarshal([]byte(out), &rows) != nil || len(rows) != 22 ||
+	if code != 0 || json.Unmarshal([]byte(out), &rows) != nil || len(rows) != 24 ||
 		rows[0].Scope != "dự án" || rows[0].State != skill.StateCurrent || rows[10].State != skill.StateCurrent ||
-		rows[11].Scope != "toàn máy" || rows[11].State != skill.StateMissing {
+		rows[12].Scope != "toàn máy" || rows[12].State != skill.StateMissing {
 		t.Fatalf("skill status: %s", out)
 	}
 

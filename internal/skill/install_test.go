@@ -56,7 +56,7 @@ func TestInstallLifecycle(t *testing.T) {
 	tg, root := newTarget(t)
 	dest := filepath.Join(root, ".claude", "skills", "doc-cr")
 	res, err := Install(tg, nil, false, false, "0.1.0")
-	if err != nil || len(res) != 11 || resOf(res, "doc-cr").Action != "đã cài" || res[10].Action != "đã cài" {
+	if err != nil || len(res) != 12 || resOf(res, "doc-cr").Action != "đã cài" || res[11].Action != "đã cài" {
 		t.Fatalf("cài mới: %+v %v", res, err)
 	}
 	b, _ := os.ReadFile(filepath.Join(dest, "SKILL.md"))

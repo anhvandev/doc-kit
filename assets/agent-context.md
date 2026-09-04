@@ -40,6 +40,7 @@ Every document under `docs/` is created by the `dk` CLI from embedded templates;
 | `doc-intake` | a new idea with nothing written yet: idea, interview, brief awaiting approval (`docs/intake/`) |
 | `doc-cr` | a change to something that exists: Change Request with impact table awaiting approval (`docs/cr/`) |
 | `doc-overview` | Product overview, Architecture overview, Glossary (`docs/overview/`) |
+| `doc-feature-list` | planned feature table split from an approved Product brief: temporary FL-xx codes, groups, MoSCoW priority, links back to brief sections (`docs/overview/feature-list.md`) |
 | `doc-adr` | a significant technical decision, numbered, immutable once accepted (`docs/adr/`) |
 | `doc-feature-spec` | 11-section Feature Spec from an approved brief or accepted CR (`docs/features/`) |
 | `doc-design-system` | tokens, foundations, atoms through templates, patterns (`docs/design/`) |
