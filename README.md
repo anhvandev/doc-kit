@@ -7,6 +7,7 @@ thật, HTML là bản sinh, mọi thay đổi trong `docs/` có dòng changelog
 - Kiến trúc ba lớp template, CLI, skill: [`docs/kien-truc.md`](docs/kien-truc.md)
 - Bảng lệnh và hành vi từng lệnh: [`docs/lenh.md`](docs/lenh.md)
 - Bảng skill và 16 quy tắc `dk check`: [`docs/skill.md`](docs/skill.md)
+- Quy trình dùng skill, khi nào gọi gì, ai duyệt: [`docs/quy-trinh.md`](docs/quy-trinh.md)
 
 ## Cài binary
 
