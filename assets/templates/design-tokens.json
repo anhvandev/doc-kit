@@ -1,0 +1,127 @@
+{
+  "$dk": {
+    "type": "design-tokens",
+    "title": "",
+    "status": "draft",
+    "owner": "",
+    "created": "{{.Created}}",
+    "updated": "{{.Updated}}",
+    "source": "",
+    "created_by": "dk",
+    "dk_version": "{{.DKVersion}}",
+    "note": "Khung W3C Design Tokens. Nhóm lồng, $type kế thừa, $value; alias {a.b.c}. Primitive: thang dưới 10 bước. Semantic: lớp duy nhất component được tham chiếu, theme sáng tối đổi tại $extensions.dk.theme. Chạy `dk tokens css` sau mỗi lần sửa."
+  },
+  "color": {
+    "$type": "color",
+    "neutral": {
+      "0": { "$value": "#ffffff" },
+      "100": { "$value": "#f3f4f6" },
+      "300": { "$value": "#d1d5db" },
+      "600": { "$value": "#4b5563" },
+      "900": { "$value": "#111827" }
+    },
+    "brand": {
+      "500": { "$value": "#2563eb" },
+      "700": { "$value": "#1d4ed8" }
+    },
+    "status": {
+      "success": { "$value": "#16a34a" },
+      "warning": { "$value": "#d97706" },
+      "danger": { "$value": "#dc2626" },
+      "info": { "$value": "#0284c7" }
+    },
+    "bg": {
+      "page": { "$value": "{color.neutral.0}", "$extensions": { "dk": { "theme": { "dark": "{color.neutral.900}" } } } },
+      "surface": { "$value": "{color.neutral.100}" }
+    },
+    "text": {
+      "body": { "$value": "{color.neutral.900}", "$extensions": { "dk": { "theme": { "dark": "{color.neutral.100}" } } } },
+      "muted": { "$value": "{color.neutral.600}" },
+      "on-action": { "$value": "{color.neutral.0}" }
+    },
+    "action": {
+      "primary": { "$value": "{color.brand.500}" },
+      "primary-hover": { "$value": "{color.brand.700}" }
+    },
+    "border": {
+      "default": { "$value": "{color.neutral.300}" },
+      "focus": { "$value": "{color.brand.500}" }
+    },
+    "feedback": {
+      "success": { "$value": "{color.status.success}" },
+      "warning": { "$value": "{color.status.warning}" },
+      "danger": { "$value": "{color.status.danger}" },
+      "info": { "$value": "{color.status.info}" }
+    }
+  },
+  "border-width": {
+    "$type": "dimension",
+    "thin": { "$value": "1px" }
+  },
+  "space": {
+    "$type": "dimension",
+    "1": { "$value": "4px" },
+    "2": { "$value": "8px" },
+    "3": { "$value": "12px" },
+    "4": { "$value": "16px" },
+    "6": { "$value": "24px" },
+    "8": { "$value": "32px" },
+    "inset": {
+      "sm": { "$value": "{space.2}" },
+      "md": { "$value": "{space.4}" },
+      "lg": { "$value": "{space.6}" }
+    },
+    "stack": {
+      "sm": { "$value": "{space.2}" },
+      "md": { "$value": "{space.4}" },
+      "lg": { "$value": "{space.8}" }
+    }
+  },
+  "font": {
+    "family": {
+      "base": { "$type": "fontFamily", "$value": "system-ui, sans-serif" },
+      "mono": { "$type": "fontFamily", "$value": "ui-monospace, monospace" }
+    },
+    "size": {
+      "$type": "dimension",
+      "sm": { "$value": "14px" },
+      "md": { "$value": "16px" },
+      "lg": { "$value": "20px" },
+      "xl": { "$value": "28px" }
+    },
+    "weight": {
+      "$type": "fontWeight",
+      "regular": { "$value": 400 },
+      "bold": { "$value": 600 }
+    },
+    "line-height": {
+      "$type": "number",
+      "tight": { "$value": 1.25 },
+      "body": { "$value": 1.5 }
+    },
+    "text": {
+      "body": { "$type": "dimension", "$value": "{font.size.md}" },
+      "heading": { "$type": "dimension", "$value": "{font.size.xl}" }
+    }
+  },
+  "radius": {
+    "$type": "dimension",
+    "sm": { "$value": "4px" },
+    "md": { "$value": "8px" },
+    "full": { "$value": "9999px" }
+  },
+  "shadow": {
+    "$type": "shadow",
+    "card": { "$value": "0 1px 2px rgba(0, 0, 0, 0.08)" },
+    "overlay": { "$value": "0 8px 24px rgba(0, 0, 0, 0.16)" }
+  },
+  "size": {
+    "$type": "dimension",
+    "touch": { "$value": "44px" },
+    "control": {
+      "sm": { "$value": "32px" },
+      "md": { "$value": "40px" },
+      "lg": { "$value": "48px" }
+    }
+  }
+}

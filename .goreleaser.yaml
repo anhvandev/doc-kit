@@ -1,0 +1,33 @@
+# goreleaser v2. Chạy khi push tag v*: build 6 nền tảng, archive, checksums.
+version: 2
+
+builds:
+  - id: dk
+    main: ./cmd/dk
+    binary: dk
+    env: [CGO_ENABLED=0]
+    goos: [linux, darwin, windows]
+    goarch: [amd64, arm64]
+    flags: [-trimpath]
+    ldflags:
+      - -s -w -X github.com/anhvandev/doc-kit/internal/cli.Version={{ .Version }}
+
+archives:
+  - id: dk
+    formats: [tar.gz]
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+    name_template: "dk_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    files: [README.md]
+
+checksum:
+  name_template: checksums.txt
+
+changelog:
+  use: git
+  filters:
+    exclude: ["^docs:", "^test:", "^chore:"]
+
+release:
+  draft: false

@@ -1,0 +1,84 @@
+/* Viết theo html-style.md trong cùng thư mục. */
+:root {
+  --ink: #1d1a17;
+  --ink-soft: #4e4842;
+  --paper: #fbf9f4;
+  --paper-2: #f1ede4;
+  --rule: #c9c1b3;
+  --accent: #7a3b16;
+  --accent-ink: #ffffff;
+  --mark: #ffe8a8;
+  --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", "Noto Serif", Georgia, serif;
+  --sans: "Segoe UI", "Helvetica Neue", "Noto Sans", Arial, sans-serif;
+  --mono: "SFMono-Regular", Menlo, Consolas, "Liberation Mono", "DejaVu Sans Mono", monospace;
+}
+
+html { font-family: var(--sans); color: var(--ink); background: var(--paper); }
+body { margin: 0; line-height: 1.55; font-size: 1rem; }
+
+.page {
+  display: grid;
+  grid-template-columns: minmax(0, 70ch) minmax(14rem, 24rem);
+  column-gap: 3rem;
+  padding: 2.5rem 2rem 4rem 6vw;
+}
+main { grid-column: 1; min-width: 0; }
+.meta { grid-column: 2; align-self: start; position: sticky; top: 1.5rem; }
+
+@media (max-width: 60rem) {
+  .page { grid-template-columns: minmax(0, 1fr); padding: 1.5rem 1rem 3rem; }
+  .meta { grid-column: 1; position: static; order: -1; margin-bottom: 1.5rem; }
+}
+
+h1, h2, h3, h4 { font-family: var(--serif); font-weight: 600; line-height: 1.2; margin: 2rem 0 0.6rem; }
+h1 { font-size: 2rem; margin-top: 0; }
+h2 { font-size: 1.4rem; border-bottom: 1px solid var(--rule); padding-bottom: 0.25rem; }
+h3 { font-size: 1.15rem; }
+p, ul, ol { margin: 0.6rem 0; }
+a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a:hover, a:focus-visible { text-decoration-thickness: 2px; }
+code, pre, .steps a { font-family: var(--mono); font-size: 0.9em; }
+code { background: var(--paper-2); padding: 0.05em 0.3em; border-radius: 3px; }
+pre { background: var(--paper-2); padding: 0.8rem 1rem; overflow-x: auto; border-left: 3px solid var(--rule); }
+pre code { background: none; padding: 0; }
+blockquote { margin: 0.8rem 0; padding: 0.2rem 0 0.2rem 1rem; border-left: 3px solid var(--accent); color: var(--ink-soft); }
+hr { border: 0; border-top: 1px solid var(--rule); margin: 2rem 0; }
+
+table { border-collapse: collapse; width: 100%; margin: 0.8rem 0; font-size: 0.95rem; }
+th, td { text-align: left; vertical-align: top; padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--rule); }
+th { font-family: var(--serif); font-weight: 600; border-bottom-width: 2px; }
+tbody tr:nth-child(even) { background: var(--paper-2); }
+td[id^="step-"] { font-family: var(--mono); white-space: nowrap; }
+td[id^="step-"]:target, tr:has(> td[id^="step-"]:target) { background: var(--mark); }
+
+pre.mermaid { background: var(--paper); border-left: 0; padding: 0.5rem 0; overflow-x: auto; }
+pre.mermaid svg { max-width: 100%; height: auto; }
+.steps { font-size: 0.9rem; color: var(--ink-soft); margin: -0.2rem 0 1.2rem; }
+.steps a { margin-right: 0.5rem; }
+
+.meta { font-size: 0.85rem; }
+.meta .status { font-size: 1em; }
+.meta table { font-size: inherit; margin: 0; }
+.meta th { width: 7rem; font-family: var(--sans); font-weight: 600; color: var(--ink-soft); border: 0; padding-left: 0; }
+.meta td { border: 0; word-break: break-word; }
+.meta tbody tr:nth-child(even) { background: none; }
+.meta .id { font-family: var(--mono); }
+.status { display: inline-block; padding: 0.05em 0.5em; border: 1px solid var(--accent); border-radius: 3px; color: var(--accent); font-family: var(--mono); font-size: 0.85em; }
+
+.page.index { grid-template-columns: minmax(0, 96ch); }
+.index h1 { margin-bottom: 1.5rem; }
+.index h2 { margin-top: 2.5rem; }
+
+@media (prefers-reduced-motion: no-preference) {
+  a { transition: text-decoration-thickness 120ms ease; }
+}
+
+@media print {
+  html { background: #fff; color: #000; }
+  .page { display: block; padding: 0; }
+  .meta { position: static; margin-bottom: 1rem; }
+  a { color: #000; }
+  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 0.8em; }
+  tr, pre { break-inside: avoid; }
+  tbody tr:nth-child(even) { background: none !important; }
+}

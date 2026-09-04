@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{.Title}}</title>
+<style>
+{{.CSS}}
+</style>
+</head>
+<body>
+<div class="page{{if .Index}} index{{end}}">
+<main>
+{{.Body}}
+</main>
+{{if .Meta}}<aside class="meta" aria-label="Metadata">
+<table>
+<tbody>
+{{range .Meta}}<tr><th scope="row">{{.Key}}</th><td{{if eq .Key "id"}} class="id"{{end}}>{{if eq .Key "status"}}<span class="status">{{.Value}}</span>{{else}}{{.Value}}{{end}}</td></tr>
+{{end}}</tbody>
+</table>
+</aside>{{end}}
+</div>
+{{if .HasMermaid}}<script>
+{{.Mermaid}}
+</script>
+<script>mermaid.initialize({startOnLoad: true, theme: "neutral"});</script>
+{{end}}</body>
+</html>

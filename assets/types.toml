@@ -1,0 +1,390 @@
+# Bảng loại tài liệu. Mỗi bảng một loại; dir tương đối docs/.
+# id: "none" | "seq:<tiền tố>{n:03}" | "date:<tiền tố>{yymmdd}-{slug}"
+# from.<loại nguồn> = { <trường đích> = "<trường nguồn>" }
+# beside_source: --from file ngoài thư mục loại thì đặt vào thư mục cùng tên file nguồn (interview của CR)
+# final: trạng thái đã chốt; tài liệu chốt mà không có tài liệu nào source trỏ về là "tài liệu chết"
+# warn_lines: ngưỡng cảnh báo số dòng riêng của loại, thay cho [check] warn_lines trong dk.toml
+
+[idea]
+dir = "intake"
+subdir = "{yymmdd}-{slug}"
+name = "idea.md"
+id = "none"
+description = "Ý tưởng mới, điền nhanh trong 10 phút; level = project | feature"
+required = ["type", "title", "status", "created", "level"]
+statuses = ["draft", "interviewing", "briefed", "dropped"]
+
+[interview]
+dir = "intake"
+subdir = "{yymmdd}-{slug}"
+name = "interview.md"
+id = "none"
+description = "Phỏng vấn làm rõ từng trường chưa rõ của ý tưởng hoặc tác động CR"
+required = ["type", "title", "status", "created"]
+statuses = ["open", "closed"]
+from.idea = { title = "title", level = "level" }
+from.cr = { title = "title" }
+beside_source = true
+
+[brief]
+dir = "intake"
+subdir = "{yymmdd}-{slug}"
+name = "brief.md"
+id = "none"
+description = "Brief: nguồn sự thật của ý tưởng sau phỏng vấn; level = project | feature, kind = product | design | feature"
+required = ["type", "title", "status", "owner", "created", "level", "kind"]
+statuses = ["draft", "review", "approved", "rejected"]
+final = ["approved"]
+from.idea = { title = "title", level = "level" }
+from.interview = { title = "title", level = "level" }
+
+[cr]
+dir = "cr"
+name = "{id}.md"
+id = "date:CR-{yymmdd}-{slug}"
+description = "Change Request: thay đổi trên thứ đã có, kèm phân tích tác động"
+required = ["id", "type", "title", "status", "owner", "created", "requester", "priority"]
+statuses = ["new", "analyzing", "review", "approved", "in-progress", "closed", "rejected"]
+final = ["approved", "in-progress", "closed"]
+
+[feature-spec]
+dir = "features"
+name = "{id}-{slug}.md"
+id = "seq:F-{n:03}"
+description = "Feature Spec: nguồn sự thật cho một tính năng; format = spec | use-case | story | crud | state; has_ui = false bỏ mục Giao diện"
+required = ["id", "type", "title", "status", "owner", "created", "source"]
+statuses = ["draft", "review", "approved", "implemented", "deprecated"]
+from.brief = { title = "title", purpose = "outcome", acceptance = "acceptance" }
+from.cr = { title = "title" }
+
+[product-overview]
+dir = "overview"
+name = "product-overview.md"
+id = "none"
+description = "Product overview: sản phẩm giải quyết gì, cho ai, nhóm tính năng, thước đo; một trang, soạn từ Product brief đã duyệt"
+required = ["type", "title", "status", "owner", "created", "source"]
+statuses = ["draft", "review", "approved"]
+warn_lines = 150
+from.brief = { title = "title", outcome = "outcome", acceptance = "acceptance" }
+
+[architecture]
+dir = "overview"
+name = "architecture.md"
+id = "none"
+description = "Architecture overview: sơ đồ thành phần, luồng dữ liệu, ranh giới, tech stack; sơ đồ trước, văn xuôi sau"
+required = ["type", "title", "status", "owner", "created"]
+statuses = ["draft", "review", "approved"]
+warn_lines = 400
+
+[glossary]
+dir = "overview"
+name = "glossary.md"
+id = "none"
+description = "Glossary: bảng thuật ngữ nghiệp vụ thống nhất; dk check cảnh báo thuật ngữ in đậm trong Feature Spec chưa có ở đây"
+required = ["type", "title", "status", "owner", "created"]
+statuses = ["draft", "review", "approved"]
+warn_lines = 300
+
+[adr]
+dir = "adr"
+name = "{id}-{slug}.md"
+id = "seq:ADR-{n:04}"
+description = "Architecture Decision Record: bối cảnh, lựa chọn, quyết định, hệ quả; đánh số, thân bất biến sau khi accepted"
+required = ["id", "type", "title", "status", "owner", "created"]
+statuses = ["proposed", "accepted", "superseded", "deprecated"]
+
+# Họ Design (Tầng 3): chỉ khi phần mềm có giao diện. Tên file dùng {feature}
+# (mã Feature Spec), {step} (mã bước), {layer} (lớp Atomic Design) lấy từ --set
+# hoặc chép từ nguồn --from theo bảng from.
+
+[design-tokens]
+dir = "design/tokens"
+name = "tokens.json"
+id = "none"
+kind = "json"
+description = "Design tokens khung W3C (JSON, metadata ở khóa $dk): primitive và semantic; dk tokens css sinh tokens.css"
+required = ["type", "title", "status", "owner", "created", "source"]
+statuses = ["draft", "review", "approved"]
+from.brief = { title = "title" }
+
+[design-foundations]
+dir = "design"
+name = "foundations.md"
+id = "none"
+description = "Quy tắc nền của Design system: lưới, điểm gãy, accessibility, icon, giọng văn giao diện, thư viện UI dùng sẵn"
+required = ["type", "title", "status", "owner", "created", "source"]
+statuses = ["draft", "review", "approved"]
+from.brief = { title = "title" }
+
+[design-component]
+dir = "design/{layer}s"
+name = "{slug}.md"
+id = "none"
+description = "Một component theo Atomic Design; layer = atom | molecule | organism | template; đủ biến thể, kích thước, trạng thái, quy tắc, ARIA"
+required = ["type", "title", "status", "owner", "created", "layer"]
+statuses = ["draft", "review", "approved", "deprecated"]
+
+[design-pattern]
+dir = "design/patterns"
+name = "{slug}.md"
+id = "none"
+description = "Pattern: công thức ghép organism cho một tình huống (form dài, xác nhận xóa, tìm kiếm và lọc, trạng thái tải, rỗng, lỗi)"
+required = ["type", "title", "status", "owner", "created"]
+statuses = ["draft", "review", "approved", "deprecated"]
+
+[userflow]
+dir = "design/flows"
+name = "{feature}-flow.md"
+id = "none"
+description = "User flow của một tính năng: Mermaid, mã bước là tập con của Feature Spec cùng feature (dk check userflow-steps)"
+required = ["type", "title", "status", "owner", "created", "source", "feature"]
+statuses = ["draft", "review", "approved"]
+from.feature-spec = { title = "title", feature = "id" }
+from.cr = { title = "title" }
+from.brief = { title = "title" }
+
+[wireframe]
+dir = "design/wireframes"
+name = "{feature}-{step}.md"
+id = "none"
+description = "Wireframe một màn hình tại một mã bước: đen trắng, dạng text hoặc ASCII; người duyệt trước khi làm mockup"
+required = ["type", "title", "status", "owner", "created", "source", "feature", "step"]
+statuses = ["draft", "review", "approved"]
+from.userflow = { title = "title", feature = "feature" }
+
+[mockup]
+dir = "design/mockups"
+name = "{feature}-{step}.html"
+id = "none"
+kind = "html"
+description = "Mockup HTML tĩnh một màn hình tại một mã bước, chỉ dùng CSS variables từ tokens.css (dk check mockup-tokens); designer dùng Figma: --set external=<url>"
+required = ["type", "title", "status", "owner", "created", "source", "feature", "step"]
+statuses = ["draft", "review", "approved"]
+from.userflow = { title = "title", feature = "feature" }
+from.wireframe = { title = "title", feature = "feature", step = "step" }
+
+[ui-spec]
+dir = "design"
+name = "{feature}-ui-spec.md"
+id = "none"
+description = "UI spec của một tính năng: kích thước, khoảng cách, responsive, animation; sinh từ công cụ thiết kế, không viết tay"
+required = ["type", "title", "status", "owner", "created", "source", "feature"]
+statuses = ["draft", "review", "approved"]
+from.userflow = { title = "title", feature = "feature" }
+
+# Họ Kế hoạch và tiến độ (Tầng 5). plan và report nằm ở plans_dir (dk.toml),
+# ngoài docs/, không ghi CHANGELOG-DOCS. dir bắt đầu bằng {plans_dir} lấy gốc
+# là plans_dir; bắt đầu bằng {in} lấy gốc là thư mục --in (thư mục plan đang
+# làm, hoặc chính plans/ cho report không thuộc plan nào).
+
+[roadmap]
+dir = "plan"
+name = "roadmap.md"
+id = "none"
+description = "Roadmap: thứ tự ưu tiên tính năng theo mốc; một file, người chốt, cập nhật theo quý hoặc đợt phát hành"
+required = ["type", "title", "status", "owner", "created"]
+statuses = ["draft", "review", "approved"]
+
+[plan]
+dir = "{plans_dir}"
+subdir = "{yymmdd}-{hhmm}-{slug}"
+name = "plan.md"
+id = "none"
+description = "Plan: một đợt việc một thư mục trong plans/; mục tiêu, phạm vi, non-goals, giai đoạn, tiêu chí hoàn thành; mỗi giai đoạn một file phase"
+required = ["type", "title", "status", "owner", "created"]
+statuses = ["draft", "approved", "in-progress", "done", "cancelled"]
+
+[plan-phase]
+dir = "{in}"
+name = "{id}-{slug}.md"
+id = "seq:phase-{n:02}"
+description = "Một giai đoạn của plan (--in <thư mục plan>): bối cảnh, yêu cầu, file, bước, kiểm chứng, rủi ro, rollback; số thứ tự đếm trong thư mục"
+required = ["id", "type", "title", "status", "created"]
+statuses = ["todo", "in-progress", "done", "skipped"]
+
+[report]
+dir = "{in}/reports"
+name = "report-{yymmdd}-{hhmm}-{slug}.md"
+id = "none"
+description = "Report kết thúc giai đoạn (--in <thư mục plan> hoặc --in plans): đã làm gì, kiểm chứng thế nào kèm bằng chứng, còn gì, câu hỏi mở; không sửa sau khi nộp"
+required = ["type", "title", "status", "owner", "created"]
+statuses = ["draft", "submitted"]
+
+[decision-log]
+dir = "plan"
+name = "decision-log.md"
+id = "none"
+description = "Decision log: quyết định nhỏ chưa đến mức ADR, kể cả giao diện; một dòng một quyết định, nối thêm bằng --append"
+required = ["type", "title", "status", "owner", "created"]
+statuses = ["active", "archived"]
+
+[changelog-product]
+dir = "."
+name = "CHANGELOG.md"
+id = "none"
+description = "CHANGELOG sản phẩm theo Keep a Changelog: thay đổi theo phiên bản bằng ngôn ngữ người dùng, tổng hợp từ Report và commit"
+required = ["type", "title", "status", "owner", "created"]
+statuses = ["active"]
+
+# Họ Test (Tầng 6). Test case sinh từ mục 9 Feature Spec; Gherkin (.feature)
+# là tài liệu chạy được, bảng (.md) khi Testing strategy chọn format table.
+
+[testing-strategy]
+dir = "test"
+name = "strategy.md"
+id = "none"
+description = "Testing strategy: loại test, công cụ, phạm vi bao phủ, cách chạy, định dạng test case (gherkin | table); một file, người chốt"
+required = ["type", "title", "status", "owner", "created"]
+statuses = ["draft", "review", "approved"]
+
+[test-case]
+dir = "test"
+name = "{feature}-cases.feature"
+id = "none"
+kind = "feature"
+description = "Test case Gherkin của một tính năng, --from <Feature Spec>: mỗi tiêu chí chấp nhận (AC) một Scenario, tag @<mã tính năng> @AC<n>; Background từ mục 3"
+required = ["type", "title", "status", "owner", "created", "source", "feature"]
+statuses = ["draft", "review", "approved"]
+from.feature-spec = { title = "title", feature = "id" }
+
+[test-case-table]
+dir = "test"
+name = "{feature}-cases.md"
+id = "none"
+description = "Test case dạng bảng của một tính năng, --from <Feature Spec>: mỗi tiêu chí chấp nhận một dòng Given, When, Then, kết quả"
+required = ["type", "title", "status", "owner", "created", "source", "feature"]
+statuses = ["draft", "review", "approved"]
+from.feature-spec = { title = "title", feature = "id" }
+
+[ui-test-checklist]
+dir = "test"
+name = "{feature}-ui.md"
+id = "none"
+description = "Checklist test giao diện của một tính năng, --from <Feature Spec>: mỗi mã bước một dòng so màn hình thật với mockup đã duyệt ở mục 6"
+required = ["type", "title", "status", "owner", "created", "source", "feature"]
+statuses = ["draft", "review", "approved"]
+from.feature-spec = { title = "title", feature = "id" }
+
+[test-report]
+dir = "test/reports"
+name = "{yymmdd}-{slug}.md"
+id = "none"
+description = "Test report một đợt kiểm thử: cái gì chạy, fail, output thật đính kèm, quyết định xử lý fail; theo đợt phát hành"
+required = ["type", "title", "status", "owner", "created"]
+statuses = ["draft", "submitted"]
+
+# Họ Người dùng cuối (Tầng 7). Release brief chép từ Feature Spec (mục 2, 3,
+# 5, 6, 11) viết lại bằng ngôn ngữ người dùng; Release notes gom brief bằng
+# --collect <phiên bản>; User guide theo nhiệm vụ, chỉ mục bằng dk index user-guide.
+
+[release-brief]
+dir = "release/briefs"
+name = "{feature}.md"
+id = "none"
+description = "Release brief một tính năng cho người dùng cuối, --from <Feature Spec>: giúp gì, ai dùng, bước cơ bản, ảnh màn hình, giới hạn; kind = feature | fix; dk check no-jargon"
+required = ["type", "title", "status", "owner", "created", "source", "feature", "kind"]
+statuses = ["draft", "review", "ready"]
+from.feature-spec = { title = "title", feature = "id" }
+
+[release-notes]
+dir = "release"
+name = "{version}.md"
+id = "none"
+description = "Release notes một phiên bản: dk new release-notes --collect <phiên bản> gom mọi Release brief ready chưa có released_in, nhóm Mới và Sửa lỗi, ghi released_in vào từng brief"
+required = ["type", "title", "status", "owner", "created", "version"]
+statuses = ["draft", "review", "published"]
+
+[user-guide]
+dir = "release/guide"
+name = "{slug}.md"
+id = "none"
+description = "User guide một nhiệm vụ một trang, ghép từ Release brief (--from); trường task là nhóm nhiệm vụ; chỉ mục bằng dk index user-guide; dk check no-jargon"
+required = ["type", "title", "status", "owner", "created", "task"]
+statuses = ["draft", "review", "approved"]
+from.release-brief = { title = "title", feature = "feature" }
+
+[faq]
+dir = "release"
+name = "faq.md"
+id = "none"
+description = "FAQ và lỗi thường gặp: chỉ thêm khi câu hỏi lặp lần thứ hai, nối bằng --append \"<câu hỏi> | <trả lời>\""
+required = ["type", "title", "status", "owner", "created"]
+statuses = ["active"]
+
+# Họ Vận hành (Tầng 8), trong docs/ops/. Environment không chứa giá trị secret
+# (dk check env-no-secret); Runbook một sự cố một file; Postmortem trong 48 giờ.
+
+[deployment]
+dir = "ops"
+name = "deployment.md"
+id = "none"
+description = "Deployment guide: từng bước chạy được, rollback, CI/CD; soạn từ cấu hình CI thật"
+required = ["type", "title", "status", "owner", "created"]
+statuses = ["draft", "review", "approved"]
+
+[environment]
+dir = "ops"
+name = "environment.md"
+id = "none"
+description = "Environment và cấu hình: tên biến, ý nghĩa, khác biệt dev/staging/prod, nơi giữ secret; không giá trị thật (dk check env-no-secret)"
+required = ["type", "title", "status", "owner", "created"]
+statuses = ["draft", "review", "approved"]
+
+[runbook]
+dir = "ops/runbooks"
+name = "{slug}.md"
+id = "none"
+description = "Runbook một sự cố một file: dấu hiệu, bước chẩn đoán, bước xử lý, bước xác nhận; mỗi bước một lệnh hoặc một hành động quan sát được"
+required = ["type", "title", "status", "owner", "created"]
+statuses = ["draft", "review", "approved"]
+
+[monitoring]
+dir = "ops"
+name = "monitoring.md"
+id = "none"
+description = "Monitoring và alerting: metric, ngưỡng, người nhận, liên kết dashboard thật"
+required = ["type", "title", "status", "owner", "created"]
+statuses = ["draft", "review", "approved"]
+
+[postmortem]
+dir = "ops/postmortems"
+name = "{yymmdd}-{slug}.md"
+id = "none"
+description = "Postmortem một sự cố: timeline, nguyên nhân gốc, hành động có người và hạn, không đổ lỗi; --set incident_at=\"yyyy-mm-dd hh:mm\", dk new tính written_within_48h"
+required = ["type", "title", "status", "owner", "created", "incident_at"]
+statuses = ["draft", "review", "closed"]
+
+[backup-dr]
+dir = "ops"
+name = "backup-dr.md"
+id = "none"
+description = "Backup và disaster recovery: RPO, RTO, quy trình khôi phục, ngày diễn tập cuối (last_drill); dk status báo quá 6 tháng chưa diễn tập"
+required = ["type", "title", "status", "owner", "created"]
+statuses = ["draft", "review", "approved"]
+
+# Họ Quản trị (Tầng 9), trong docs/governance/: chỉ template và dk new, không có
+# skill vì tài liệu quản trị do người viết.
+
+[charter]
+dir = "governance"
+name = "charter.md"
+id = "none"
+description = "Project charter hoặc SOW: phạm vi, ngân sách, cột mốc, bên liên quan; người viết, không có skill"
+required = ["type", "title", "status", "owner", "created"]
+statuses = ["draft", "review", "approved"]
+
+[risk-register]
+dir = "governance"
+name = "risk-register.md"
+id = "none"
+description = "Risk register: rủi ro, xác suất, tác động, giảm thiểu, người theo dõi; người viết, không có skill"
+required = ["type", "title", "status", "owner", "created"]
+statuses = ["active", "archived"]
+
+[meeting-notes]
+dir = "governance/meetings"
+name = "{yymmdd}-{slug}.md"
+id = "none"
+description = "Meeting notes: quyết định nào, ai chốt, khi nào, việc tiếp theo; người viết, không có skill"
+required = ["type", "title", "status", "owner", "created"]
+statuses = ["draft", "final"]

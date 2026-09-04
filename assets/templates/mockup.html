@@ -1,0 +1,69 @@
+<!-- dk:
+type: mockup
+title: ""
+status: draft
+owner: ""
+created: {{.Created}}
+updated: {{.Updated}}
+source: ""
+created_by: dk
+dk_version: {{.DKVersion}}
+feature: {{.Feature}}
+step: {{.Step}}
+state: normal
+external: "{{.External}}"
+-->
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mockup {{.Feature}} {{.Step}}: {{.Title}}</title>
+{{if .External}}<!-- Mockup do designer làm ở công cụ ngoài; file này chỉ giữ liên kết và ảnh xuất tĩnh đặt cạnh (cùng tên, đuôi .png). Không qua lint mockup-tokens. -->
+</head>
+<body>
+<main>
+  <h1>Mockup {{.Feature}} {{.Step}}: {{.Title}}</h1>
+  <p><a href="{{.External}}">Mở bản thiết kế</a></p>
+  <img src="{{.Feature}}-{{.Step}}.png" alt="Ảnh xuất tĩnh của mockup {{.Feature}} {{.Step}}">
+</main>
+</body>
+</html>
+{{else}}<!-- Mockup tĩnh: mở từ đĩa, không mạng. Mọi màu và khoảng cách qua biến trong ../tokens/tokens.css; không gõ giá trị hex hay px (dk check mockup-tokens). Mỗi trạng thái quan trọng (normal, empty, error, loading) một file, ghi ở state. Chỉ ghép organism đã có trong ../organisms/; không định nghĩa style mới cho component. -->
+<link rel="stylesheet" href="../tokens/tokens.css">
+<style>
+  body {
+    margin: 0;
+    font-family: var(--font-family-base);
+    font-size: var(--font-text-body);
+    line-height: var(--font-line-height-body);
+    color: var(--color-text-body);
+    background: var(--color-bg-page);
+  }
+  main {
+    padding: var(--space-inset-lg);
+    display: grid;
+    gap: var(--space-stack-md);
+  }
+  /* Vùng đặt organism theo template trang; đổi tên lớp theo organism dùng. */
+  .organism {
+    padding: var(--space-inset-md);
+    border: var(--border-width-thin) solid var(--color-border-default);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-surface);
+    box-shadow: var(--shadow-card);
+  }
+</style>
+</head>
+<body>
+<main>
+  <section class="organism" data-organism="header">
+    <h1>{{.Title}}</h1>
+  </section>
+  <section class="organism" data-organism="">
+    <!-- nội dung organism theo wireframe {{.Feature}} {{.Step}} -->
+  </section>
+</main>
+</body>
+</html>
+{{end}}

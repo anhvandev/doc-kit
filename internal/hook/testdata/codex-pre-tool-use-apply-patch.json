@@ -1,0 +1,14 @@
+{
+  "session_id": "0198f0d4-2b1c-7c2e-9a11-6d2f0c1a9b77",
+  "transcript_path": "__ROOT__/.codex/sessions/rollout.jsonl",
+  "cwd": "__ROOT__",
+  "hook_event_name": "PreToolUse",
+  "model": "gpt-5-codex",
+  "turn_id": "turn-1",
+  "tool_name": "apply_patch",
+  "tool_use_id": "call_1",
+  "tool_input": {
+    "command": "*** Begin Patch\n*** Add File: docs/features/moi.md\n+# Mới\n*** Update File: docs/features/co.md\n@@\n-# có\n+# có sửa\n*** Delete File: README.md\n*** End Patch"
+  },
+  "permission_mode": "default"
+}
