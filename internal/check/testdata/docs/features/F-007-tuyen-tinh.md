@@ -11,33 +11,33 @@ created_by: dk
 ---
 # F-007
 
-## 2. Mục đích
+## 1. Mục đích
 
-## 3. Tác nhân
+## 2. Tác nhân
 
-## 4. Sơ đồ luồng chính
+## 3. Sơ đồ luồng chính
 
-Luồng tuyến tính, xem bảng mục 5.
+Luồng tuyến tính, xem bảng mục 4.
 
-## 5. Hành vi
+## 4. Hành vi
 
 | Mã | Hành động | Phản hồi |
 |---|---|---|
 | B1 | | |
 | B2 | | |
 
-## 6. Giao diện
+## 5. Giao diện
 
 | Mã bước | Mockup | Trạng thái |
 |---|---|---|
 | B1 | chưa có | |
 
-## 7. Ngoại lệ
+## 6. Ngoại lệ
 
-## 8. Quy tắc
+## 7. Quy tắc
 
-## 9. Tiêu chí
+## 8. Tiêu chí
 
-## 10. Dữ liệu
+## 9. Dữ liệu
 
-## 11. Ngoài phạm vi
+## 10. Ngoài phạm vi

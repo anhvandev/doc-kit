@@ -60,33 +60,33 @@ dk new feature-list <slug-san-pham> --from docs/intake/<yymmdd>-<slug>/brief.md 
 
 | Mục list | Lấy từ | Cách viết |
 |---|---|---|
-| 2 Nguồn | brief, idea.md | liên kết tương đối đến hai file |
-| 3 Bảng tính năng | brief §1 Kết quả mong muốn, §4 Tiêu chí chấp nhận; idea mục Giao diện | mỗi kết quả kiểm chứng được là một hoặc vài tính năng; mỗi màn hình idea nêu là một ứng viên |
-| 4 Nhóm | bảng mục 3 | gom thành 3 đến 7 nhóm theo việc người dùng làm; mỗi nhóm một câu |
-| 5 Chưa rõ | brief, idea | câu không tách được thành tính năng; tính năng suy ra mà brief không nhắc; không có thì ghi "không" |
+| 1 Nguồn | brief, idea.md | liên kết tương đối đến hai file |
+| 2 Bảng tính năng | brief §1 Kết quả mong muốn, §4 Tiêu chí chấp nhận; idea mục Giao diện | mỗi kết quả kiểm chứng được là một hoặc vài tính năng; mỗi màn hình idea nêu là một ứng viên |
+| 3 Nhóm | bảng mục 2 | gom thành 3 đến 7 nhóm theo việc người dùng làm; mỗi nhóm một câu |
+| 4 Chưa rõ | brief, idea | câu không tách được thành tính năng; tính năng suy ra mà brief không nhắc; không có thì ghi "không" |
 
 Quy tắc điền một dòng bảng:
 
 - Mã: `FL-01`, `FL-02`, theo thứ tự xuất hiện trong brief.
 - Mô tả: một câu "người dùng <làm gì> để <được gì>", có kết quả nhìn thấy.
-- Nhóm: tên trùng với mục 4.
+- Nhóm: tên trùng với mục 3.
 - Ưu tiên: `must` khi brief §4 có tiêu chí chấp nhận ứng với nó; `should` khi brief
   §1 nhắc mà §4 không đo; `could` khi chỉ idea nhắc; `won't` khi brief §3 Ngoài phạm
   vi nhắc (giữ dòng để không ai hỏi lại).
 - Nguồn: đúng mục sinh ra dòng (`brief §1`, `brief §4`, `idea §8`). Dòng không dẫn
-  được mục nào thì không vào bảng, chuyển sang mục 5.
+  được mục nào thì không vào bảng, chuyển sang mục 4.
 - Spec: để trống.
 
 Không bịa tính năng brief và idea không nhắc. Quá 25 dòng thì gom dòng cùng việc.
 
 | Sai | Đúng |
 |---|---|
-| Thêm "Đăng nhập" vì sản phẩm nào cũng có | Mục 5: "brief không nhắc đăng nhập, cần người quyết" |
+| Thêm "Đăng nhập" vì sản phẩm nào cũng có | Mục 4: "brief không nhắc đăng nhập, cần người quyết" |
 | Mô tả "hệ thống xử lý đơn" | "người bán xác nhận đơn để kho bắt đầu đóng gói" |
 | Bỏ FL-03 rồi đánh số lại FL-04 thành FL-03 | FL-03 ghi `won't`, giữ số |
 
 Xong thân: đặt `status: review`, chạy khối "Sau mỗi lần sửa". **Dừng.** Báo người:
-đường dẫn, số dòng theo từng ưu tiên, nội dung mục 5; cách chốt: đổi
+đường dẫn, số dòng theo từng ưu tiên, nội dung mục 4; cách chốt: đổi
 `status: approved`; nhắc mỗi dòng đi tiếp bằng intake cấp tính năng theo thứ tự
 ưu tiên.
 
@@ -122,5 +122,5 @@ dung và chạy lại; cảnh báo `line-threshold` thì gom dòng.
 dk render docs/overview/feature-list.md
 ```
 
-Mở `docs/html/overview/feature-list.html` kiểm: bảng mục 3 hiện đủ 7 cột, liên kết
-ở mục 2 bấm được. Lệch thì sửa Markdown, không sửa HTML.
+Mở `docs/html/overview/feature-list.html` kiểm: bảng mục 2 hiện đủ 7 cột, liên kết
+ở mục 1 bấm được. Lệch thì sửa Markdown, không sửa HTML.

@@ -15,10 +15,10 @@ var (
 )
 
 // glossarySections là các mục của Feature Spec được quét thuật ngữ in đậm:
-// 2 Mục đích, 5 Hành vi, 8 Quy tắc nghiệp vụ. Mục 9 có **Given/When/Then** không phải thuật ngữ.
-var glossarySections = map[string]bool{"2": true, "5": true, "8": true}
+// 1 Mục đích, 4 Hành vi, 7 Quy tắc nghiệp vụ. Mục 8 có **Given/When/Then** không phải thuật ngữ.
+var glossarySections = map[string]bool{"1": true, "4": true, "7": true}
 
-// glossaryTerm: thuật ngữ in đậm lần đầu trong mục 2, 5, 8 của Feature Spec
+// glossaryTerm: thuật ngữ in đậm lần đầu trong mục 1, 4, 7 của Feature Spec
 // phải có ở cột đầu bảng của một file Glossary (mọi file loại glossary được
 // gộp, để tách Glossary theo miền vẫn đúng); thiếu là warning. Chưa có Glossary
 // thì bỏ qua.

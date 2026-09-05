@@ -12,26 +12,28 @@ Chỉ quy tắc, không giải thích; giải thích đọc ở mục báo cáo 
 - AI không tự sửa mục hành vi của Feature Spec đã duyệt nếu chưa có người duyệt (qua CR).
 - Mỗi tài liệu có một `owner`. Không có người chịu trách nhiệm thì không viết.
 
-## Cấu trúc 11 mục
+## Cấu trúc 10 mục
 
-1. Frontmatter: mã, tên, trạng thái, chủ sở hữu, liên kết brief hoặc CR (`source`).
-2. Mục đích và giá trị cho người dùng.
-3. Tác nhân và điều kiện tiên quyết.
-4. Sơ đồ luồng chính: Mermaid nhúng, mỗi nút mang mã bước `B1`, `B2`...
-5. Bảng hành vi theo mã bước: mỗi dòng một cặp hành động của tác nhân và phản hồi
+Frontmatter (không đánh số): mã, tên, trạng thái, chủ sở hữu, liên kết brief hoặc CR
+(`source`). Thân:
+
+1. Mục đích và giá trị cho người dùng.
+2. Tác nhân và điều kiện tiên quyết.
+3. Sơ đồ luồng chính: Mermaid nhúng, mỗi nút mang mã bước `B1`, `B2`...
+4. Bảng hành vi theo mã bước: mỗi dòng một cặp hành động của tác nhân và phản hồi
    quan sát được của hệ thống, đúng mã bước trong sơ đồ.
-6. Giao diện: mỗi mã bước liên kết đến mockup và trạng thái hiển thị. Chỉ liên kết,
+5. Giao diện: mỗi mã bước liên kết đến mockup và trạng thái hiển thị. Chỉ liên kết,
    không chép ảnh. Bỏ khi không có giao diện (`has_ui: false`).
-7. Luồng thay thế và ngoại lệ: text hoặc sơ đồ nhỏ riêng, không nhồi vào sơ đồ chính.
-8. Quy tắc nghiệp vụ: tham chiếu bằng mã, không lặp lại giữa các spec.
-9. Tiêu chí chấp nhận dạng Given / When / Then.
-10. Dữ liệu và API liên quan: chỉ liên kết.
-11. Ngoài phạm vi.
+6. Luồng thay thế và ngoại lệ: text hoặc sơ đồ nhỏ riêng, không nhồi vào sơ đồ chính.
+7. Quy tắc nghiệp vụ: tham chiếu bằng mã, không lặp lại giữa các spec.
+8. Tiêu chí chấp nhận dạng Given / When / Then.
+9. Dữ liệu và API liên quan: chỉ liên kết.
+10. Ngoài phạm vi.
 
 Sơ đồ, bảng hành vi, tiêu chí chấp nhận của một spec ở cùng file vì ràng buộc bằng
 mã bước; không tách theo mục con. `dk check` quy tắc `spec-section-order`: tiêu đề
-cấp 2 `## 2.` đến `## 11.` đúng thứ tự, mỗi số một lần; `has_ui: false` bỏ 6;
-`format: crud` bỏ 4.
+cấp 2 `## 1.` đến `## 10.` đúng thứ tự, mỗi số một lần; `has_ui: false` bỏ 5;
+`format: crud` bỏ 3.
 
 ## Sơ đồ và mã bước
 
@@ -59,18 +61,18 @@ cấp 2 `## 2.` đến `## 11.` đúng thứ tự, mỗi số một lần; `has_
 | Team Agile, muốn tài liệu chạy được thành test | User Story + Acceptance Criteria dạng Gherkin | `story` |
 | CRUD đơn giản | Bảng field và quyền, không viết use case | `crud` |
 | Tính năng có trạng thái phức tạp | Bổ sung State diagram | `state` |
-| Outsource, cần bàn giao và nghiệm thu | Functional Spec đầy đủ + Test Case Specification | `spec` với mục 7, 9 đầy đủ; test ở họ Test |
+| Outsource, cần bàn giao và nghiệm thu | Functional Spec đầy đủ + Test Case Specification | `spec` với mục 6, 8 đầy đủ; test ở họ Test |
 
 ## Nguyên tắc viết
 
 - Không viết "hệ thống xử lý" mà không nói kết quả nhìn thấy được.
-- Ngoại lệ và trường hợp biên chiếm ít nhất một nửa giá trị tài liệu: số dòng mục 7
-  không dưới nửa số dòng bảng mục 5.
+- Ngoại lệ và trường hợp biên chiếm ít nhất một nửa giá trị tài liệu: số dòng mục 6
+  không dưới nửa số dòng bảng mục 4.
 - Kết quả mong đợi phải kiểm chứng được: thông báo cụ thể, dữ liệu thay đổi thế nào,
   sự kiện nào phát ra.
 - Dùng bảng và sơ đồ thay cho văn xuôi dài.
-- Mục 5, 7, 9 nuôi Test case. Mục 6 nuôi Test giao diện. Mục 2, 4, 5, 6 nuôi Release brief.
-- Thuật ngữ nghiệp vụ in đậm ở mục 2, 5, 8 phải có trong Glossary (`dk check` quy tắc
+- Mục 4, 6, 8 nuôi Test case. Mục 5 nuôi Test giao diện. Mục 1, 2, 4, 5, 10 nuôi Release brief.
+- Thuật ngữ nghiệp vụ in đậm ở mục 1, 4, 7 phải có trong Glossary (`dk check` quy tắc
   `glossary-term`).
 
 ## Luồng một chiều
@@ -88,9 +90,9 @@ cấp 2 `## 2.` đến `## 11.` đúng thứ tự, mỗi số một lần; `has_
 ## Khi nào nới quy tắc
 
 - Luồng tuyến tính dưới bốn bước hoặc CRUD: bỏ sơ đồ, bảng hành vi là đủ.
-- Không có giao diện người dùng (API, CLI, batch job): bỏ mục 6, giữ giọng văn thông
+- Không có giao diện người dùng (API, CLI, batch job): bỏ mục 5, giữ giọng văn thông
   báo lỗi trong Glossary.
-- Yêu cầu thay đổi hàng ngày: giữ spec ở mức mục 1, 2, 9; chi tiết hành vi để trong test.
+- Yêu cầu thay đổi hàng ngày: giữ spec ở mức frontmatter, mục 1, 8; chi tiết hành vi để trong test.
 - Dự án dưới 5 tính năng: vẫn một tính năng một file.
 
 ## Tách file và frontmatter
@@ -107,7 +109,7 @@ cấp 2 `## 2.` đến `## 11.` đúng thứ tự, mỗi số một lần; `has_
   phát hành), `deprecated` (bãi bỏ).
 - `source`: `<yymmdd>-<slug>/brief.md` khi tạo từ brief; mã CR sau khi sửa theo CR.
 - `purpose`, `acceptance`: chép từ `outcome`, `acceptance` của brief.
-- `has_ui`: `true` mặc định; `false` bỏ mục 6. `format`: `spec`, `use-case`, `story`,
+- `has_ui`: `true` mặc định; `false` bỏ mục 5. `format`: `spec`, `use-case`, `story`,
   `crud`, `state`; đặt lúc `dk new`, không đổi sau.
 - `owner`: người chịu trách nhiệm spec, bắt buộc.
 

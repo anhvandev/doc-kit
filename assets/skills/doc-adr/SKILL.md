@@ -57,19 +57,19 @@ dụ "Dùng PostgreSQL làm cơ sở dữ liệu chính". Điền thân từ th�
 
 | Mục | Nội dung | Thiếu thì hỏi |
 |---|---|---|
-| 2 Bối cảnh | vấn đề, ràng buộc, vì sao quyết bây giờ | "Điều gì buộc phải quyết lúc này?" |
-| 3 Lựa chọn đã xét | 2 đến 4 phương án, ưu, nhược, kết luận | "Ngoài phương án chọn còn xét gì?" |
-| 4 Quyết định | một câu khẳng định; người chốt, ngày để trống | không hỏi; người điền khi chốt |
-| 5 Hệ quả | điều tốt lên, điều chấp nhận, việc phải làm theo | "Chấp nhận đánh đổi gì?" |
-| 6 Liên kết | CR hoặc brief nguồn, Feature Spec và Architecture bị ảnh hưởng, ADR bị thay | tự tìm bằng `dk refs` |
+| 1 Bối cảnh | vấn đề, ràng buộc, vì sao quyết bây giờ | "Điều gì buộc phải quyết lúc này?" |
+| 2 Lựa chọn đã xét | 2 đến 4 phương án, ưu, nhược, kết luận | "Ngoài phương án chọn còn xét gì?" |
+| 3 Quyết định | một câu khẳng định; người chốt, ngày để trống | không hỏi; người điền khi chốt |
+| 4 Hệ quả | điều tốt lên, điều chấp nhận, việc phải làm theo | "Chấp nhận đánh đổi gì?" |
+| 5 Liên kết | CR hoặc brief nguồn, Feature Spec và Architecture bị ảnh hưởng, ADR bị thay | tự tìm bằng `dk refs` |
 
 Hỏi **một câu một lượt**, chờ trả lời, ghi rồi hỏi tiếp. Không bịa phương án chưa
 bàn. Giữ `status: proposed`. Chạy khối "Sau mỗi lần sửa ADR".
 
 ### 3. Bàn giao
 
-Báo người: đường dẫn ADR, mục 3 và 5 để duyệt, cách chốt: đổi `status: accepted`,
-điền người chốt và ngày ở mục 4. Sau khi chốt, thân file bất biến; `dk check` báo
+Báo người: đường dẫn ADR, mục 2 và 4 để duyệt, cách chốt: đổi `status: accepted`,
+điền người chốt và ngày ở mục 3. Sau khi chốt, thân file bất biến; `dk check` báo
 lỗi `adr-immutable` nếu đổi.
 
 ## Thay thế ADR cũ
@@ -80,7 +80,7 @@ Khi quyết định mới thay ADR `accepted` có sẵn (`ADR-000X`):
 dk new adr <slug> --set owner="<người phụ trách>" --set supersedes=ADR-000X
 ```
 
-Soạn ADR mới như bước 2; mục 2 nêu vì sao ADR cũ không còn đúng; mục 6 liên kết
+Soạn ADR mới như bước 2; mục 1 nêu vì sao ADR cũ không còn đúng; mục 5 liên kết
 đến ADR cũ. Rồi mở ADR cũ, sửa **chỉ frontmatter**: `status: superseded`,
 `superseded_by: <mã ADR mới>`. Không đụng thân ADR cũ dù có lỗi chính tả.
 

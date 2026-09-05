@@ -22,7 +22,7 @@ type Data struct {
 	Updated   string
 	Source    string
 	DKVersion string
-	// Format và HasUI chỉ feature-spec dùng: chọn biến thể mục 4, 5, 6, 9.
+	// Format và HasUI chỉ feature-spec dùng: chọn biến thể mục 3, 4, 5, 8.
 	Format string
 	HasUI  bool
 	// Feature, Step, Layer, External là trường --set của họ Design: mã Feature
@@ -32,14 +32,14 @@ type Data struct {
 	Layer    string
 	External string
 	// Scenarios, Background, Steps chỉ họ Test dùng, chép từ Feature Spec
-	// (--from): mỗi tiêu chí chấp nhận một Scenario, mục 3 thành Background,
-	// mỗi mã bước có mockup ở mục 6 một dòng checklist.
+	// (--from): mỗi tiêu chí chấp nhận một Scenario, mục 2 thành Background,
+	// mỗi mã bước có mockup ở mục 5 một dòng checklist.
 	Scenarios  []Scenario
 	Background []string
 	Steps      []UIStep
 	// Purpose, Actors, Actions, Limits chỉ release-brief dùng, chép từ Feature
-	// Spec (--from): mục 2, 3, cột hành động của bảng hành vi mục 5, mục 11;
-	// Steps là cột mockup của mục 6.
+	// Spec (--from): mục 1, 2, cột hành động của bảng hành vi mục 4, mục 10;
+	// Steps là cột mockup của mục 5.
 	Purpose []string
 	Actors  []string
 	Actions []string
@@ -68,7 +68,7 @@ type Scenario struct {
 	Raw   string // dòng gốc khi không tách được; ba trường trên rỗng
 }
 
-// UIStep là một mã bước và mockup tương ứng ở mục 6 của Feature Spec.
+// UIStep là một mã bước và mockup tương ứng ở mục 5 của Feature Spec.
 type UIStep struct {
 	Code   string // B1
 	Mockup string // liên kết hoặc chữ ở cột Mockup

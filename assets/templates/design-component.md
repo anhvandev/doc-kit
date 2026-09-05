@@ -14,13 +14,13 @@ uses: []
 
 # {{.Title}} ({{.Layer}})
 
-<!-- gợi ý: mục 1 là frontmatter. layer: atom (không chứa atom khác) | molecule (chỉ chứa atom) | organism (chứa molecule và atom) | template (chứa organism, định nghĩa vùng đặt). uses: tên component lớp ngay dưới được dùng; không được vượt lớp. Thư viện UI có sẵn: ghi component thư viện tương ứng ở mục 2 và chỉ ghi ngoại lệ. -->
+<!-- gợi ý: layer: atom (không chứa atom khác) | molecule (chỉ chứa atom) | organism (chứa molecule và atom) | template (chứa organism, định nghĩa vùng đặt). uses: tên component lớp ngay dưới được dùng; không được vượt lớp. Thư viện UI có sẵn: ghi component thư viện tương ứng ở mục 1 và chỉ ghi ngoại lệ. -->
 
-## 2. Mục đích và khi nào dùng
+## 1. Mục đích và khi nào dùng
 
 <!-- gợi ý: hai đến ba câu; dùng khi, không dùng khi (chỉ sang component khác) -->
 
-## 3. Biến thể
+## 2. Biến thể
 
 <!-- gợi ý: primary, secondary, ghost, destructive...; mỗi biến thể ghi token semantic dùng cho nền, chữ, viền -->
 
@@ -28,7 +28,7 @@ uses: []
 |---|---|---|---|---|
 | | | | | |
 
-## 4. Kích thước
+## 3. Kích thước
 
 <!-- gợi ý: sm, md, lg theo thang chung: --size-control-*, --space-inset-*, --font-size-* -->
 
@@ -36,7 +36,7 @@ uses: []
 |---|---|---|---|
 | md | `--size-control-md` | `--space-inset-md` | `--font-size-md` |
 
-## 5. Trạng thái
+## 4. Trạng thái
 
 <!-- gợi ý: mặc định, hover, active, focus, disabled, loading, lỗi; mỗi trạng thái khác gì và dùng token nào -->
 
@@ -44,12 +44,12 @@ uses: []
 |---|---|---|
 | focus | focus ring | `--color-border-focus` |
 
-## 6. Quy tắc dùng và không dùng
+## 5. Quy tắc dùng và không dùng
 
 - Dùng: 
 - Không dùng: 
 
-## 7. Accessibility
+## 6. Accessibility
 
 <!-- gợi ý: vai trò ARIA, thuộc tính bắt buộc, điều hướng bàn phím, nhãn khi icon-only -->
 
@@ -58,6 +58,6 @@ uses: []
 | Vai trò | |
 | Bàn phím | |
 
-## 8. Cấu tạo
+## 7. Cấu tạo
 
 <!-- gợi ý: molecule trở lên: danh sách thành phần lớp dưới và cách sắp; template: vùng đặt (slot) và organism cho phép -->

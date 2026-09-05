@@ -52,8 +52,8 @@ func TestRules(t *testing.T) {
 		{"features/F-003-dai.md", "line-threshold", Error, "vượt max_lines 800"},
 		{"features/F-004-vua.md", "line-threshold", Warning, "vượt warn_lines 500"},
 		{"overview/product-overview.md", "line-threshold", Warning, "160 dòng, vượt warn_lines 150"},
-		{"features/F-002-b.md", "spec-section-order", Error, "thiếu mục 3, 4, 6, 7, 8, 10, 11"},
-		{"features/F-006-crud.md", "spec-section-order", Error, "tiêu đề cấp 2 phải là 2, 3, 5, 6, 7, 8, 9, 10, 11 theo thứ tự; thiếu mục 9; mục lạ 12; mục lặp 8"},
+		{"features/F-002-b.md", "spec-section-order", Error, "thiếu mục 2, 3, 5, 6, 7, 9, 10"},
+		{"features/F-006-crud.md", "spec-section-order", Error, "tiêu đề cấp 2 phải là 1, 2, 4, 5, 6, 7, 8, 9, 10 theo thứ tự; thiếu mục 8; mục lạ 11; mục lặp 7"},
 		{"features/F-005-cr.md", "cr-approval-order", Error, "CR-260901-cho còn review (cập nhật 2026-09-01 10:00)"},
 		{"features/F-002-b.md", "glossary-term", Warning, "thuật ngữ **kho** chưa có trong docs/overview/glossary-van-chuyen.md, docs/overview/glossary.md"},
 		{"design/flows/F-001-flow.md", "userflow-steps", Error, "mã bước không có trong F-001: B9"},
@@ -74,7 +74,7 @@ func TestRules(t *testing.T) {
 	}
 	// Không báo giả: brief được F-001 trỏ về; F-002 có test; README generated bỏ qua; link hợp lệ.
 	for _, bad := range []struct{ file, rule string }{
-		{"features/F-005-cr.md", "spec-section-order"},  // has_ui: false, bỏ mục 6
+		{"features/F-005-cr.md", "spec-section-order"},  // has_ui: false, bỏ mục 5
 		{"features/F-005-cr.md", "step-codes"},          // B2a hậu tố khớp sơ đồ và bảng
 		{"features/F-006-crud.md", "cr-approval-order"}, // spec cũ hơn CR
 		{"features/F-002-b.md", "cr-approval-order"},    // source không phải CR tồn tại
@@ -121,7 +121,7 @@ func TestRules(t *testing.T) {
 	if e, w := Count(fs); e == 0 || w == 0 {
 		t.Fatalf("Count: %d lỗi %d cảnh báo", e, w)
 	}
-	// glossary-term: thuật ngữ đã định nghĩa, Given/When/Then ở mục 9 và chữ in đậm trong khối mã không báo; mỗi thuật ngữ một lần (gộp hoa thường), đúng dòng.
+	// glossary-term: thuật ngữ đã định nghĩa, Given/When/Then ở mục 8 và chữ in đậm trong khối mã không báo; mỗi thuật ngữ một lần (gộp hoa thường), đúng dòng.
 	n := 0
 	for _, f := range fs {
 		if f.Rule == "glossary-term" {

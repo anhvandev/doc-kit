@@ -33,7 +33,7 @@ Chỉ quy tắc, không giải thích; giải thích đọc ở mục báo cáo 
   no-jargon` cảnh báo từ trong `dk.toml` `[release] jargon` (mặc định: API,
   endpoint, database, migration, backend, frontend, JSON). Từ nằm trong tên sản
   phẩm: người quyết định bỏ khỏi danh sách, skill không tự sửa.
-- Giới hạn đã biết lấy từ mục 11 và ngoại lệ mục 7 chưa xử lý; nói thẳng, không hứa.
+- Giới hạn đã biết lấy từ mục 10 và ngoại lệ mục 6 chưa xử lý; nói thẳng, không hứa.
 - Ảnh: liên kết mockup đã duyệt hoặc ảnh chụp thật do người thêm.
 - `released_in` do `dk new release-notes --collect` ghi; không sửa tay.
 

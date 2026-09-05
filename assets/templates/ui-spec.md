@@ -14,9 +14,9 @@ tool: ""
 
 # UI spec {{.Feature}}: {{.Title}}
 
-<!-- gợi ý: mục 1 là frontmatter. Sinh từ công cụ thiết kế (tool: tên công cụ và liên kết xuất), không viết tay; chỉ tạo khi dự án có công cụ sinh. Mockup HTML tĩnh thì không cần file này: kích thước và khoảng cách đã nằm trong tokens.css. -->
+<!-- gợi ý: Sinh từ công cụ thiết kế (tool: tên công cụ và liên kết xuất), không viết tay; chỉ tạo khi dự án có công cụ sinh. Mockup HTML tĩnh thì không cần file này: kích thước và khoảng cách đã nằm trong tokens.css. -->
 
-## 2. Kích thước và khoảng cách
+## 1. Kích thước và khoảng cách
 
 <!-- gợi ý: theo mã bước; mỗi giá trị là tên token, không gõ số -->
 
@@ -24,10 +24,10 @@ tool: ""
 |---|---|---|
 | | | |
 
-## 3. Responsive
+## 2. Responsive
 
-<!-- gợi ý: bố cục đổi thế nào ở mỗi điểm gãy của foundations mục 3 -->
+<!-- gợi ý: bố cục đổi thế nào ở mỗi điểm gãy của foundations mục 2 -->
 
-## 4. Animation
+## 3. Animation
 
 <!-- gợi ý: chuyển động nào, thời lượng, easing; tôn trọng prefers-reduced-motion -->

@@ -54,13 +54,13 @@ Nguồn là brief hoặc CR đã chốt: thêm `--set source=<id>`. `dk` tạo
 
 | Mục | Cách viết |
 |---|---|
-| 2 Mục tiêu | một đến ba câu, xong đợt này thì có gì |
-| 3 Phạm vi | việc cụ thể, liên kết Feature Spec, CR, ADR |
-| 4 Non-goals | thứ cố ý không làm |
-| 5 Giai đoạn | một dòng một phase, liên kết file phase, trạng thái chép từ phase |
-| 6 Tiêu chí hoàn thành | kiểm chứng được: test, tài liệu, số đo |
-| 7 Rủi ro | rủi ro, dấu hiệu, phản ứng |
-| 8 Report | liên kết report từng giai đoạn, thêm dần |
+| 1 Mục tiêu | một đến ba câu, xong đợt này thì có gì |
+| 2 Phạm vi | việc cụ thể, liên kết Feature Spec, CR, ADR |
+| 3 Non-goals | thứ cố ý không làm |
+| 4 Giai đoạn | một dòng một phase, liên kết file phase, trạng thái chép từ phase |
+| 5 Tiêu chí hoàn thành | kiểm chứng được: test, tài liệu, số đo |
+| 6 Rủi ro | rủi ro, dấu hiệu, phản ứng |
+| 7 Report | liên kết report từng giai đoạn, thêm dần |
 
 ### 3. Tạo file phase
 
@@ -69,8 +69,8 @@ dk new plan-phase <slug> --in plans/<yymmdd>-<hhmm>-<slug> --set owner="<ngườ
 ```
 
 Một giai đoạn một file; số thứ tự `phase-01`, `phase-02` do `dk` đếm trong thư mục.
-Điền mục 2 đến 7 của phase: chỉ thứ cần để thực hiện an toàn, không chép plan.md.
-Cập nhật bảng mục 5 của plan.md.
+Điền mục 1 đến 6 của phase: chỉ thứ cần để thực hiện an toàn, không chép plan.md.
+Cập nhật bảng mục 4 của plan.md.
 
 ### 4. Kiểm và dừng
 
@@ -78,7 +78,7 @@ Cập nhật bảng mục 5 của plan.md.
 dk check plans/<thư mục plan>/plan.md
 ```
 
-Đặt `status: draft`. **Dừng.** Báo người đường dẫn, số phase, mục 3 và 4 để duyệt.
+Đặt `status: draft`. **Dừng.** Báo người đường dẫn, số phase, mục 2 và 3 để duyệt.
 Người duyệt thì đổi `status: approved`; chỉ khi đó mới làm việc theo plan.
 
 ## `update`: Report kết thúc giai đoạn
@@ -93,19 +93,19 @@ Không thuộc plan nào: `--in plans` để vào `plans/reports/`.
 
 ### 2. Điền và nộp
 
-- Mục 2 Đã làm: từng việc, liên kết file đã đổi.
-- Mục 3 Bằng chứng: mã commit (`commit <hash>`), đường dẫn output test, hoặc khối
+- Mục 1 Đã làm: từng việc, liên kết file đã đổi.
+- Mục 2 Bằng chứng: mã commit (`commit <hash>`), đường dẫn output test, hoặc khối
   kết quả thật trong ```. Không tóm tắt thay output.
-- Mục 4 Chưa xong: việc còn trong phạm vi, lý do, ai làm tiếp.
-- Mục 5 Câu hỏi mở: quyết định cần người; không tự quyết trong report.
+- Mục 3 Chưa xong: việc còn trong phạm vi, lý do, ai làm tiếp.
+- Mục 4 Câu hỏi mở: quyết định cần người; không tự quyết trong report.
 
 ```
 dk check plans/<thư mục plan>/reports/<file report>
 ```
 
-`check` báo `report-evidence`: bổ sung mục 3 rồi chạy lại. Xong đặt
+`check` báo `report-evidence`: bổ sung mục 2 rồi chạy lại. Xong đặt
 `status: submitted`; đổi `status` của file phase thành `done` (hoặc `skipped`),
-cập nhật cột Trạng thái mục 5 và liên kết mục 8 của plan.md. Sau `submitted`
+cập nhật cột Trạng thái mục 4 và liên kết mục 7 của plan.md. Sau `submitted`
 không sửa report; sai thì viết report mới.
 
 ## `update`: Decision log
@@ -153,9 +153,9 @@ dk index features
 dk new roadmap roadmap --set owner="<người chốt>"
 ```
 
-Điền mục 3 từ `docs/features/README.md` (Feature catalog): mã, tên, trạng thái;
+Điền mục 2 từ `docs/features/README.md` (Feature catalog): mã, tên, trạng thái;
 xếp mốc theo thứ tự người nói hoặc theo phụ thuộc giữa spec. Chưa có người chốt
-mốc thì để mục 4 Chưa xếp. Chạy khối "Sau mỗi lần sửa file trong docs/" rồi
+mốc thì để mục 3 Chưa xếp. Chạy khối "Sau mỗi lần sửa file trong docs/" rồi
 **dừng**, hỏi người chốt thứ tự và mốc (`status: approved`).
 
 ## Sau mỗi lần sửa file trong `docs/`

@@ -19,13 +19,13 @@ flowchart TD
     B2 --> B3{B3 Hợp lệ?}
 ```
 
-## 6. Giao diện
+## 5. Giao diện
 
 | Mã | Màn hình |
 |---|---|
 | B1 | Danh sách |
 
-## 5. Hành vi
+## 4. Hành vi
 
 | Mã | Hành động | Phản hồi |
 |---|---|---|

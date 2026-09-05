@@ -58,13 +58,13 @@ không chép ảnh vào spec. Test giao diện so với mockup đã duyệt.
   chèn (ví dụ `B3e` cho rỗng, `B3x` cho lỗi, `B3l` cho đang tải). Hậu tố này chỉ là tên
   file mockup, không phải bước mới: **không** ghi `B3e` vào cột "Mã bước" của user flow
   hay bảng hành vi (`userflow-steps` sẽ báo lỗi); liên kết file đó ở cột "Mockup" của
-  dòng `B3` trong mục 3 user flow và mục 6 Feature Spec.
+  dòng `B3` trong mục 2 user flow và mục 5 Feature Spec.
 
 ## Mã bước
 
 - `B` + số, hậu tố chữ thường cho bước chèn giữa (`B2a`); không đánh số lại vì mockup và
   test đặt tên theo mã.
-- Spec có sẵn: lấy mã từ mục 4 và 5 của spec. Spec chưa có: user flow đề xuất, Feature
+- Spec có sẵn: lấy mã từ mục 3 và 4 của spec. Spec chưa có: user flow đề xuất, Feature
   Spec dùng lại đúng mã.
 
 ## Khi nào nới quy tắc

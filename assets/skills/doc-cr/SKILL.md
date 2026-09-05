@@ -49,24 +49,24 @@ dk index features
 ```
 
 rồi đọc `docs/features/README.md`, gợi ý 2 đến 3 Feature Spec có tiêu đề gần nhất để
-người chọn. Mục 2 Hiện trạng: mỗi dòng một liên kết tương đối đến tài liệu đang mô tả
+người chọn. Mục 1 Hiện trạng: mỗi dòng một liên kết tương đối đến tài liệu đang mô tả
 thứ sắp đổi, kèm mã bước hoặc màn hình cụ thể. Không chép nội dung tài liệu vào CR.
 
 ### 2. Thay đổi đề xuất và lý do
 
-Mục 3 ghi từ lời người: đổi gì, vì sao, ai yêu cầu, chuyện gì xảy ra nếu không đổi.
+Mục 2 ghi từ lời người: đổi gì, vì sao, ai yêu cầu, chuyện gì xảy ra nếu không đổi.
 Thiếu ý nào thì hỏi đúng ý đó, một câu một lần. Đặt `status: analyzing`.
 
 ### 3. Bảng tác động
 
-Với **mỗi** tài liệu ở mục 2:
+Với **mỗi** tài liệu ở mục 1:
 
 ```
 dk refs docs/features/<file>.md
 ```
 
 Đọc mọi file trong hai danh sách "Đi" và "Đến" (mở từng file, tìm phần nói về thứ
-sắp đổi). Điền 6 dòng bảng mục 4, cột "Bị ảnh hưởng" ghi `Có` hoặc `Không`, cột
+sắp đổi). Điền 6 dòng bảng mục 3, cột "Bị ảnh hưởng" ghi `Có` hoặc `Không`, cột
 "Cần làm gì" ghi việc cụ thể kèm liên kết file đã có; file sẽ tạo ghi đường dẫn trong
 backtick (liên kết tới file chưa có là lỗi `link-broken`):
 
@@ -103,30 +103,30 @@ Tóm tắt thật nói nội dung ("Bảng tác động: 3 Có, ADR chưa rõ"),
 
 ### 4. Hỏi đáp (chỉ khi còn `chưa rõ`)
 
-Chỉ cho dòng bảng còn `chưa rõ` hoặc thay đổi ở mục 3 còn mơ hồ. Từng câu một, mở
-đầu bằng tên dòng đang làm rõ, chờ trả lời, ghi khối "Câu N" vào mục 5 gồm câu hỏi,
+Chỉ cho dòng bảng còn `chưa rõ` hoặc thay đổi ở mục 2 còn mơ hồ. Từng câu một, mở
+đầu bằng tên dòng đang làm rõ, chờ trả lời, ghi khối "Câu N" vào mục 4 gồm câu hỏi,
 trả lời, **Quyết định rút ra**. Cập nhật dòng bảng tương ứng. Câu về giao diện
 kèm 2 đến 3 phương án tham chiếu để người chọn.
 
-Mục 5 dài quá 40 dòng:
+Mục 4 dài quá 40 dòng:
 
 ```
 dk new interview <slug> --from docs/cr/<CR-id>.md
 ```
 
-File vào `docs/cr/<CR-id>/interview.md`; mục 5 chỉ giữ một liên kết đến đó.
-Không còn `chưa rõ` và không có hỏi đáp thì xóa mục 5.
+File vào `docs/cr/<CR-id>/interview.md`; mục 4 chỉ giữ một liên kết đến đó.
+Không còn `chưa rõ` và không có hỏi đáp thì xóa mục 4.
 
 ### 5. Sau khi người duyệt
 
-Người trả lời bảng tác động. Ghi mục 6 Quyết định: kết luận `chấp nhận`, `từ chối`
+Người trả lời bảng tác động. Ghi mục 5 Quyết định: kết luận `chấp nhận`, `từ chối`
 hoặc `hoãn`; lý do; người chốt; ngày. Đặt `status`:
 
 - chấp nhận: `approved`, rồi `in-progress` khi bắt đầu cập nhật tài liệu đích;
 - từ chối: `rejected`, giữ nguyên file, không xóa;
-- hoãn: giữ `review`, ghi lý do hoãn ở mục 6.
+- hoãn: giữ `review`, ghi lý do hoãn ở mục 5.
 
-Với CR `approved`: mục 7 liệt kê từng tài liệu đích (mỗi dòng `Có` ở bảng là ít
+Với CR `approved`: mục 6 liệt kê từng tài liệu đích (mỗi dòng `Có` ở bảng là ít
 nhất một dòng `- [ ] [file](đường dẫn)` kèm việc). Việc cập nhật từng tài liệu đích
 thuộc skill của họ tài liệu đó (họ Feature Spec, họ Design, họ ADR, họ Test, họ
 Release và User guide); giao việc bằng cách nêu tên họ, đường dẫn file và dòng
@@ -136,18 +136,18 @@ Mỗi lần sửa chạy lại khối "Sau mỗi lần sửa CR".
 
 ### 6. Quy tắc tỷ lệ
 
-- Sửa lỗi nhỏ, tác động chỉ một Feature Spec và test: bảng mục 4 giữ hai dòng
-  Feature Spec và Test case, xóa bốn dòng còn lại, bỏ mục 5. Vẫn dừng ở `review`.
+- Sửa lỗi nhỏ, tác động chỉ một Feature Spec và test: bảng mục 3 giữ hai dòng
+  Feature Spec và Test case, xóa bốn dòng còn lại, bỏ mục 4. Vẫn dừng ở `review`.
 - Bảng có `Có` ở dòng Design system hoặc ADR: nhắc rõ trong báo cáo cho người
   "cần duyệt bảng trước mọi thay đổi"; không giao việc cho tài liệu đích nào,
   kể cả Feature Spec, trước khi người duyệt.
-- Người từ chối: giữ file với `status: rejected`, ghi lý do ở mục 6.
+- Người từ chối: giữ file với `status: rejected`, ghi lý do ở mục 5.
 
 ## `update`: sửa CR đang mở
 
-CR `new`, `analyzing`, `review`: sửa theo lời người, chạy lại bước 3 nếu mục 2 hoặc
-3 đổi, rồi dừng ở `review` như cũ. CR `approved` hoặc `in-progress`: chỉ sửa mục 7
-(đánh dấu xong) và không đổi mục 6. CR `closed` hoặc `rejected`: không sửa; thay
+CR `new`, `analyzing`, `review`: sửa theo lời người, chạy lại bước 3 nếu mục 1 hoặc
+3 đổi, rồi dừng ở `review` như cũ. CR `approved` hoặc `in-progress`: chỉ sửa mục 6
+(đánh dấu xong) và không đổi mục 5. CR `closed` hoặc `rejected`: không sửa; thay
 đổi mới là CR mới.
 
 ## `html`

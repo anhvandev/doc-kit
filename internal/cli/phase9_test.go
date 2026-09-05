@@ -18,7 +18,7 @@ func TestReleaseAndOps(t *testing.T) {
 	b, _ := os.ReadFile(spec)
 	s := strings.Replace(string(b), "status: draft", "status: implemented", 1)
 	s = strings.Replace(s, "| B1 | | |", "| B1 | Mở màn hình endpoint | Hiển thị |", 1)
-	s = strings.Replace(s, "## 11. Ngoài phạm vi\n\n<!-- gợi ý: thứ cố ý không làm trong tính năng này; lấy từ mục 3 của brief -->\n\n- ", "## 11. Ngoài phạm vi\n\n- Lọc theo khách", 1)
+	s = strings.Replace(s, "## 10. Ngoài phạm vi\n\n<!-- gợi ý: thứ cố ý không làm trong tính năng này; lấy từ mục 3 của brief -->\n\n- ", "## 10. Ngoài phạm vi\n\n- Lọc theo khách", 1)
 	os.WriteFile(spec, []byte(s), 0o644)
 
 	out, code := run(t, dir, "new", "release-brief", "bo-loc", "--from", spec, "--set", "owner=v")

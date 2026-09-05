@@ -21,7 +21,7 @@ Chỉ quy tắc, không giải thích; giải thích đọc ở mục báo cáo 
 - Bảng tác động do AI soạn nháp từ tài liệu hiện có, người duyệt. Sáu dòng: Feature Spec (sửa mã bước nào, thêm ngoại lệ nào); Design: mockup, Design system (sửa màn hình nào, cần organism hay template mới không); ADR (quyết định nào bị thay thế); Data model, API (migration, contract đổi); Test case (test nào sửa, thêm); Release brief, User guide (đoạn nào cập nhật).
 - Hỏi đáp chỉ khi thay đổi hoặc tác động còn "chưa rõ". Cùng quy tắc với interview: từng câu, kết bằng quyết định rút ra; câu về giao diện đưa 2 đến 3 phương án tham chiếu.
 - Quyết định: chấp nhận, từ chối, hoãn. Ghi lý do và người chốt.
-- Mục 7 liên kết đến từng tài liệu đích đã sửa, đánh dấu khi xong.
+- Mục 6 liên kết đến từng tài liệu đích đã sửa, đánh dấu khi xong.
 - Trạng thái CR: mới, đang phân tích, chờ duyệt, đã chốt, đang triển khai, đã đóng, từ chối. Chỉ mục CR sinh từ frontmatter trả lời "đang có thay đổi nào".
 - Người điền yêu cầu, trả lời, duyệt tác động và quyết định. AI soạn phân tích tác động, dẫn hỏi đáp, cập nhật tài liệu đích sau khi duyệt.
 

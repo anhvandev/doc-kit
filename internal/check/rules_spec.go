@@ -8,9 +8,9 @@ import (
 	"github.com/anhvandev/doc-kit/internal/frontmatter"
 )
 
-// specSectionOrder: thân Feature Spec có đúng các tiêu đề cấp 2 "## N." từ 2
-// đến 11 theo thứ tự tăng, mỗi số một lần. has_ui: false được bỏ mục 6;
-// format: crud được bỏ mục 4. Tiêu đề chữ tùy biến thể, chỉ xét số.
+// specSectionOrder: thân Feature Spec có đúng các tiêu đề cấp 2 "## N." từ 1
+// đến 10 theo thứ tự tăng, mỗi số một lần. has_ui: false được bỏ mục 5;
+// format: crud được bỏ mục 3. Tiêu đề chữ tùy biến thể, chỉ xét số.
 func specSectionOrder(c *Context) []Finding {
 	var out []Finding
 	for _, m := range c.typed() {
@@ -19,13 +19,13 @@ func specSectionOrder(c *Context) []Finding {
 		}
 		skip := map[int]bool{}
 		if frontmatter.GetString(m.FM, "has_ui") == "false" {
-			skip[6] = true
+			skip[5] = true
 		}
 		if frontmatter.GetString(m.FM, "format") == "crud" {
-			skip[4] = true
+			skip[3] = true
 		}
 		var want []int
-		for n := 2; n <= 11; n++ {
+		for n := 1; n <= 10; n++ {
 			if !skip[n] {
 				want = append(want, n)
 			}

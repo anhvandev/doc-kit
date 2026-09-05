@@ -71,13 +71,13 @@ dk new design-foundations foundations --from docs/intake/<yymmdd>-<slug>/brief.m
 
 Điền 7 mục: bảng semantic theo vai trò (tên token, không chép giá trị), lưới và điểm
 gãy, accessibility (tương phản 4.5:1, vùng chạm `--size-touch`, focus ring), một bộ
-icon, giọng văn (thống nhất với Glossary mục 3), quy tắc lớp. Thư viện UI có sẵn: ghi
+icon, giọng văn (thống nhất với Glossary mục 2), quy tắc lớp. Thư viện UI có sẵn: ghi
 `ui_library` và chỉ ghi ngoại lệ.
 
 ### 4. Lớp 1 đến 4: component
 
 Đúng thứ tự, mỗi component một lệnh, **hỏi người duyệt sau mỗi lớp** trước khi lên lớp
-trên. Component mà Design brief mục 3 loại ra thì bỏ, ghi ở `foundations.md` mục 7:
+trên. Component mà Design brief mục 3 loại ra thì bỏ, ghi ở `foundations.md` mục 6:
 
 ```
 dk new design-component text --set layer=atom --set owner="<người phụ trách>" --set source=<yymmdd-slug của Design brief>
@@ -148,7 +148,7 @@ component hay pattern cụ thể. Thiếu một điều: **dừng**, báo ngư�
 - Component `approved` sửa xong vẫn `approved`; đổi `source` sang mã CR.
 
 Chạy khối "Sau mỗi lần sửa" với `--source <CR-id>`. Báo người: token và component đã
-đổi; nhắc họ CR đánh dấu dòng mục 7 của CR và họ Design flow xem mockup nào cần cập nhật.
+đổi; nhắc họ CR đánh dấu dòng mục 6 của CR và họ Design flow xem mockup nào cần cập nhật.
 
 ## `html`
 

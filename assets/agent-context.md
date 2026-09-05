@@ -42,7 +42,7 @@ Every document under `docs/` is created by the `dk` CLI from embedded templates;
 | `doc-overview` | Product overview, Architecture overview, Glossary (`docs/overview/`) |
 | `doc-feature-list` | planned feature table split from an approved Product brief: temporary FL-xx codes, groups, MoSCoW priority, links back to brief sections (`docs/overview/feature-list.md`) |
 | `doc-adr` | a significant technical decision, numbered, immutable once accepted (`docs/adr/`) |
-| `doc-feature-spec` | 11-section Feature Spec from an approved brief or accepted CR (`docs/features/`) |
+| `doc-feature-spec` | 10-section Feature Spec from an approved brief or accepted CR (`docs/features/`) |
 | `doc-design-system` | tokens, foundations, atoms through templates, patterns (`docs/design/`) |
 | `doc-design-flow` | user flow, wireframe, HTML mockup, prototype for one feature |
 | `doc-test` | testing strategy, Gherkin or table test cases, UI checklist, test report (`docs/test/`) |

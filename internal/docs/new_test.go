@@ -93,7 +93,7 @@ func TestIDPrefixAndSet(t *testing.T) {
 	}
 	b, _ := os.ReadFile(r3.Path)
 	fm = readFM(t, r3.Path)
-	if fm["format"] != "crud" || fm["has_ui"] != false || bytes.Contains(b, []byte("## 4.")) || bytes.Contains(b, []byte("## 6.")) || !bytes.Contains(b, []byte("## 5. Bảng field")) {
+	if fm["format"] != "crud" || fm["has_ui"] != false || bytes.Contains(b, []byte("## 3.")) || bytes.Contains(b, []byte("## 5.")) || !bytes.Contains(b, []byte("## 4. Bảng field")) {
 		t.Fatalf("biến thể crud, has_ui=false sai:\n%s", b)
 	}
 	o.Set = map[string]string{"has_ui": "no"}

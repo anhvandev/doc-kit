@@ -14,9 +14,9 @@ step: {{.Step}}
 
 # Wireframe {{.Feature}} {{.Step}}: {{.Title}}
 
-<!-- gợi ý: mục 1 là frontmatter. Đen trắng, không màu: chốt "có gì trên màn hình" trước khi vẽ đẹp. Một màn hình một file, tên theo mã tính năng và mã bước. Người duyệt xong mới làm mockup. -->
+<!-- gợi ý: Đen trắng, không màu: chốt "có gì trên màn hình" trước khi vẽ đẹp. Một màn hình một file, tên theo mã tính năng và mã bước. Người duyệt xong mới làm mockup. -->
 
-## 2. Bố cục
+## 1. Bố cục
 
 <!-- gợi ý: ASCII hoặc danh sách vùng từ trên xuống; mỗi vùng ghi organism dự kiến dùng -->
 
@@ -30,12 +30,12 @@ step: {{.Step}}
 +----------------------------------------------+
 ```
 
-## 3. Thành phần
+## 2. Thành phần
 
 | Vùng | Organism | Nội dung | Hành động |
 |---|---|---|---|
 | | | | |
 
-## 4. Trạng thái
+## 3. Trạng thái
 
 <!-- gợi ý: màn hình này khác gì khi rỗng, lỗi, đang tải -->

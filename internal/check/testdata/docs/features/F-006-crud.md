@@ -12,27 +12,27 @@ format: crud
 ---
 # F-006
 
-## 2. Mục đích
+## 1. Mục đích
 
-## 3. Tác nhân
+## 2. Tác nhân
 
-## 5. Bảng field và quyền
+## 4. Bảng field và quyền
 
-## 6. Giao diện
+## 5. Giao diện
 
-## 7. Ngoại lệ
+## 6. Ngoại lệ
 
-## 8. Quy tắc
+## 7. Quy tắc
 
-## 8. Quy tắc lặp
+## 7. Quy tắc lặp
 
 ~~~~
-## 9. Trong khối mã, không tính
+## 8. Trong khối mã, không tính
 ~~~
 ~~~~
 
-## 10. Dữ liệu
+## 9. Dữ liệu
 
-## 11. Ngoài phạm vi
+## 10. Ngoài phạm vi
 
-## 12. Thừa
+## 11. Thừa

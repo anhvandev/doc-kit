@@ -8,8 +8,8 @@ import (
 	"github.com/anhvandev/doc-kit/internal/tmpl"
 )
 
-// Họ Test chép từ Feature Spec: mục 9 (tiêu chí chấp nhận) thành Scenario,
-// mục 3 (tác nhân và điều kiện tiên quyết) thành Background, mục 6 (giao
+// Họ Test chép từ Feature Spec: mục 8 (tiêu chí chấp nhận) thành Scenario,
+// mục 2 (tác nhân và điều kiện tiên quyết) thành Background, mục 5 (giao
 // diện) thành checklist theo mã bước. Chỉ xét chữ trong tiêu đề số; AC lệch
 // khung được giữ nguyên dòng gốc ở Raw thay vì bỏ qua im lặng.
 
@@ -18,7 +18,7 @@ var (
 	acBulletRe    = regexp.MustCompile(`^\s*[-*]\s*\**(AC\d+)\**[.:]?\**\s*(.*)$`)
 	acAnyRe       = regexp.MustCompile(`\b(AC\d+)\b`)
 	acScenarioRe  = regexp.MustCompile(`^\s*(Scenario|Scenario Outline):\s*(AC\d+)?\s*(.*)$`)
-	// labelRe: nhãn đứng trước dấu hai chấm ở mục 3, bỏ khi chép sang Background.
+	// labelRe: nhãn đứng trước dấu hai chấm ở mục 2, bỏ khi chép sang Background.
 	labelRe       = regexp.MustCompile(`(?i)^(tác nhân|điều kiện tiên quyết|quyền|dữ liệu)\s*:\s*`)
 	gherkinStepRe = regexp.MustCompile(`^\s*(Given|When|Then|And|But)\s+(.*)$`)
 	gwtRe         = regexp.MustCompile(`\**(Given|When|Then)\**`)
@@ -39,9 +39,9 @@ type SpecExtract struct {
 func ExtractSpec(body []byte) SpecExtract {
 	sec := sections(string(htmlCommentRe.ReplaceAll(body, nil)))
 	return SpecExtract{
-		Scenarios:  scenarios(sec[9]),
-		Background: bullets(sec[3]),
-		Steps:      uiSteps(sec[6]),
+		Scenarios:  scenarios(sec[8]),
+		Background: bullets(sec[2]),
+		Steps:      uiSteps(sec[5]),
 	}
 }
 
@@ -84,7 +84,7 @@ func atoi(s string) int {
 	return n
 }
 
-// scenarios tách mục 9: bullet "- AC1. **Given** a **When** b **Then** c" hoặc
+// scenarios tách mục 8: bullet "- AC1. **Given** a **When** b **Then** c" hoặc
 // khối gherkin "Scenario: AC1 ..." với dòng Given / When / Then (And nối vào
 // bước trước). Mọi dòng khác có nhắc mã AC (danh sách đánh số, bảng, Scenario
 // Outline) và AC thiếu một trong ba phần giữ nguyên chữ ở Raw, không bỏ qua.
@@ -195,7 +195,7 @@ func bullets(lines []string) []string {
 	return out
 }
 
-// uiSteps đọc bảng mục 6: mỗi dòng có cột đầu là mã bước thành một mục checklist.
+// uiSteps đọc bảng mục 5: mỗi dòng có cột đầu là mã bước thành một mục checklist.
 func uiSteps(lines []string) []tmpl.UIStep {
 	var out []tmpl.UIStep
 	for _, l := range lines {
@@ -216,9 +216,9 @@ func uiSteps(lines []string) []tmpl.UIStep {
 	return out
 }
 
-// ReleaseExtract là phần Feature Spec mà Release brief chép: mục 2 (mục đích),
-// mục 3 (tác nhân), cột hành động của bảng hành vi mục 5, cột mockup mục 6,
-// mục 11 (ngoài phạm vi). Skill viết lại bằng ngôn ngữ người dùng sau đó.
+// ReleaseExtract là phần Feature Spec mà Release brief chép: mục 1 (mục đích),
+// mục 2 (tác nhân), cột hành động của bảng hành vi mục 4, cột mockup mục 5,
+// mục 10 (ngoài phạm vi). Skill viết lại bằng ngôn ngữ người dùng sau đó.
 type ReleaseExtract struct {
 	Purpose []string
 	Actors  []string
@@ -231,13 +231,13 @@ type ReleaseExtract struct {
 // tương đối trong cột mockup được đổi gốc từ specDir sang briefDir.
 func ExtractRelease(body []byte, specDir, briefDir string) ReleaseExtract {
 	sec := sections(string(htmlCommentRe.ReplaceAll(body, nil)))
-	ex := ReleaseExtract{Actors: bullets(sec[3]), Limits: bullets(sec[11])}
-	for _, l := range sec[2] {
+	ex := ReleaseExtract{Actors: bullets(sec[2]), Limits: bullets(sec[10])}
+	for _, l := range sec[1] {
 		if t := strings.TrimSpace(l); t != "" {
 			ex.Purpose = append(ex.Purpose, strings.TrimSpace(strings.TrimPrefix(t, "- ")))
 		}
 	}
-	for _, l := range sec[5] {
+	for _, l := range sec[4] {
 		sm := tableRowRe.FindStringSubmatch(l)
 		if sm == nil {
 			continue
@@ -250,7 +250,7 @@ func ExtractRelease(body []byte, specDir, briefDir string) ReleaseExtract {
 			ex.Actions = append(ex.Actions, a)
 		}
 	}
-	for _, s := range uiSteps(sec[6]) {
+	for _, s := range uiSteps(sec[5]) {
 		// Ô không có liên kết ("chưa có, xem họ Design") không phải ảnh, bỏ.
 		if !strings.Contains(s.Mockup, "](") {
 			continue

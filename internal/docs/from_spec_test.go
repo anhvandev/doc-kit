@@ -11,28 +11,28 @@ import (
 const specBody = `
 # F-001: Bộ lọc
 
-## 2. Mục đích
+## 1. Mục đích
 
-## 3. Tác nhân và điều kiện tiên quyết
+## 2. Tác nhân và điều kiện tiên quyết
 
 - Tác nhân: nhân viên kho đã đăng nhập
 - Điều kiện tiên quyết: có ít nhất một đơn hàng
 - Ghi chú:
 
-## 5. Hành vi theo mã bước
+## 4. Hành vi theo mã bước
 
 | Mã | Hành động | Phản hồi |
 |---|---|---|
 | B1 | mở | hiện |
 
-## 6. Giao diện
+## 5. Giao diện
 
 | Mã bước | Mockup | Trạng thái hiển thị |
 |---|---|---|
 | B1 | [B1](../design/mockups/F-001-B1.html) | normal |
 | B2a | chưa có, xem họ Design | |
 
-## 9. Tiêu chí chấp nhận
+## 8. Tiêu chí chấp nhận
 
 - AC1. **Given** đang ở danh sách **When** chọn trạng thái "đã giao" **Then** chỉ còn đơn đã giao
 - AC2. Given không có đơn When lọc Then hiện "Không có đơn"
@@ -43,7 +43,7 @@ const specBody = `
 | AC6 | bảng | x |
 - Đã bật cờ tính năng: beta
 
-## 10. Dữ liệu
+## 9. Dữ liệu
 `
 
 func TestExtractSpec(t *testing.T) {
@@ -80,7 +80,7 @@ func TestExtractSpec(t *testing.T) {
 }
 
 func TestExtractSpecGherkin(t *testing.T) {
-	body := "## 9. Tiêu chí\n\n```gherkin\nFeature: x\n\n  Scenario: AC1 lọc\n    Given có đơn\n    And đã đăng nhập\n    When lọc\n    Then thấy\n\n  Scenario: AC2 rỗng\n    Given không\n    When lọc\n    Then trống\n\n  Scenario Outline: AC3 nhiều\n    Given <n>\n    When x\n    Then y\n\n    Examples:\n      | n |\n      | 1 |\n```\n\n## 10. Dữ liệu\n"
+	body := "## 8. Tiêu chí\n\n```gherkin\nFeature: x\n\n  Scenario: AC1 lọc\n    Given có đơn\n    And đã đăng nhập\n    When lọc\n    Then thấy\n\n  Scenario: AC2 rỗng\n    Given không\n    When lọc\n    Then trống\n\n  Scenario Outline: AC3 nhiều\n    Given <n>\n    When x\n    Then y\n\n    Examples:\n      | n |\n      | 1 |\n```\n\n## 9. Dữ liệu\n"
 	ex := ExtractSpec([]byte(body))
 	if len(ex.Scenarios) != 3 || ex.Scenarios[0].Given != "có đơn và đã đăng nhập" || ex.Scenarios[0].Title != "lọc" || ex.Scenarios[1].Then != "trống" {
 		t.Fatalf("gherkin: %+v", ex.Scenarios)

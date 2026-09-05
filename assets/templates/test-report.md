@@ -12,9 +12,9 @@ dk_version: {{.DKVersion}}
 
 # Test report: {{.Title}}
 
-<!-- gợi ý: mục 1 là frontmatter. Một đợt kiểm thử một file, theo đợt phát hành: cái gì chạy, fail, output thật, quyết định xử lý fail. Người quyết định xử lý fail; AI viết. status: draft | submitted (không sửa sau khi nộp). source: plan hoặc CR của đợt phát hành, rỗng nếu không có. -->
+<!-- gợi ý: Một đợt kiểm thử một file, theo đợt phát hành: cái gì chạy, fail, output thật, quyết định xử lý fail. Người quyết định xử lý fail; AI viết. status: draft | submitted (không sửa sau khi nộp). source: plan hoặc CR của đợt phát hành, rỗng nếu không có. -->
 
-## 2. Phạm vi
+## 1. Phạm vi
 
 <!-- gợi ý: phiên bản, môi trường, bộ test đã chạy (liên kết file test case) -->
 
@@ -22,7 +22,7 @@ dk_version: {{.DKVersion}}
 - Môi trường: 
 - Bộ test: 
 
-## 3. Kết quả
+## 2. Kết quả
 
 <!-- gợi ý: đính output thật của công cụ, không tóm tắt thay -->
 
@@ -33,7 +33,7 @@ dk_version: {{.DKVersion}}
 ```
 ```
 
-## 4. Fail và quyết định
+## 3. Fail và quyết định
 
 <!-- gợi ý: mỗi fail một dòng: mã test case, hiện tượng, nguyên nhân nếu biết, quyết định (sửa trước phát hành | chấp nhận | hoãn), người quyết định -->
 
@@ -41,6 +41,6 @@ dk_version: {{.DKVersion}}
 |---|---|---|---|---|
 | | | | | |
 
-## 5. Câu hỏi mở
+## 4. Câu hỏi mở
 
 - 

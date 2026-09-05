@@ -38,8 +38,8 @@ Chỉ quy tắc, không giải thích; giải thích đọc ở mục báo cáo 
 
 - Thuật ngữ nghiệp vụ và định nghĩa thống nhất. Bắt buộc khi có AI: dùng sai thuật ngữ sinh mã sai.
 - Một bảng, một file, sắp theo bảng chữ cái: `Thuật ngữ | Định nghĩa | Không nhầm với | Nguồn`. Vượt 300 thuật ngữ thì tách theo miền nghiệp vụ.
-- Nguồn thuật ngữ: chữ in đậm lần đầu trong mục 2, 5, 8 của Feature Spec và trong brief. AI quét và đề xuất định nghĩa; người chọn giữ và chốt.
-- `dk check` quy tắc `glossary-term`: thuật ngữ in đậm trong mục 2, 5, 8 của Feature Spec chưa có ở cột đầu bảng là cảnh báo.
+- Nguồn thuật ngữ: chữ in đậm lần đầu trong mục 1, 4, 7 của Feature Spec và trong brief. AI quét và đề xuất định nghĩa; người chọn giữ và chốt.
+- `dk check` quy tắc `glossary-term`: thuật ngữ in đậm trong mục 1, 4, 7 của Feature Spec chưa có ở cột đầu bảng là cảnh báo.
 - Không có giao diện người dùng vẫn giữ giọng văn cho thông báo lỗi trong Glossary.
 
 ## Luồng một chiều

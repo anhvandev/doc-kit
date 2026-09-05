@@ -55,14 +55,14 @@ dk new product-overview <slug-san-pham> --from docs/intake/<yymmdd>-<slug>/brief
 
 | Mục overview | Lấy từ |
 |---|---|
-| 2 Vấn đề và người dùng | idea.md cùng thư mục (mục Ai gặp, Vấn đề) và lời người |
-| 3 Kết quả mong muốn | brief mục 1, chép nguyên |
-| 4 Nhóm tính năng chính | brief và Feature catalog: gom tính năng thành 3 đến 7 nhóm, mỗi nhóm một dòng |
-| 5 Thước đo thành công | brief mục 4, mỗi dòng đo được |
-| 6 Ràng buộc | brief mục 2, chép nguyên |
-| 7 Ngoài phạm vi | brief mục 3, chép nguyên |
+| 1 Vấn đề và người dùng | idea.md cùng thư mục (mục Ai gặp, Vấn đề) và lời người |
+| 2 Kết quả mong muốn | brief mục 1, chép nguyên |
+| 3 Nhóm tính năng chính | brief và Feature catalog: gom tính năng thành 3 đến 7 nhóm, mỗi nhóm một dòng |
+| 4 Thước đo thành công | brief mục 4, mỗi dòng đo được |
+| 5 Ràng buộc | brief mục 2, chép nguyên |
+| 6 Ngoài phạm vi | brief mục 3, chép nguyên |
 
-Không chép hành vi từng tính năng. Giữ dưới 150 dòng; vượt thì cắt mục 4 về một
+Không chép hành vi từng tính năng. Giữ dưới 150 dòng; vượt thì cắt mục 3 về một
 dòng một nhóm. Đặt `status: review`. Chạy khối "Sau mỗi lần sửa".
 
 ## `new` Architecture overview
@@ -76,14 +76,14 @@ Có mã nguồn trong dự án: đọc cấu trúc thư mục hai cấp đầu, 
 triển khai (`docker-compose*`, `Dockerfile`, thư mục `deploy/`, `infra/`), file cấu
 hình môi trường mẫu. Từ đó:
 
-1. Mục 2: sơ đồ Mermaid, mỗi nút một thành phần chạy độc lập (dịch vụ, cơ sở dữ
+1. Mục 1: sơ đồ Mermaid, mỗi nút một thành phần chạy độc lập (dịch vụ, cơ sở dữ
    liệu, hàng đợi, client, dịch vụ ngoài); mũi tên là luồng dữ liệu chính.
-2. Mục 3: mỗi nút một dòng; cột "Nơi trong mã" là đường dẫn thật; cột "Xác nhận"
+2. Mục 2: mỗi nút một dòng; cột "Nơi trong mã" là đường dẫn thật; cột "Xác nhận"
    ghi `đã xác nhận` chỉ khi có bằng chứng trực tiếp (file cấu hình khai báo thành
    phần đó), còn lại `chưa xác nhận`.
-3. Mục 4, 5, 6 từ cùng bằng chứng; phiên bản tech stack lấy từ manifest.
+3. Mục 3, 4, 5 từ cùng bằng chứng; phiên bản tech stack lấy từ manifest.
 
-Không có mã nguồn: hỏi người **một câu một lượt** theo mục 2 đến 6; không đoán.
+Không có mã nguồn: hỏi người **một câu một lượt** theo mục 1 đến 5; không đoán.
 
 Đưa người danh sách dòng `chưa xác nhận`, chờ người xác nhận từng dòng; đổi chữ
 theo câu trả lời. Không tự đổi thành `đã xác nhận`. Đặt `status: review`. Chạy
@@ -97,15 +97,15 @@ dk new glossary <slug-san-pham> --set owner="<người phụ trách>"
 
 Quét thuật ngữ:
 
-1. Mở từng file `docs/features/F-*.md`, lấy chữ in đậm **lần đầu** trong mục 2, 5,
+1. Mở từng file `docs/features/F-*.md`, lấy chữ in đậm **lần đầu** trong mục 1, 4,
    8; mở brief `approved` trong `docs/intake/`, lấy chữ in đậm.
-2. Mỗi thuật ngữ một dòng bảng mục 2: định nghĩa đề xuất từ ngữ cảnh câu chứa nó;
+2. Mỗi thuật ngữ một dòng bảng mục 1: định nghĩa đề xuất từ ngữ cảnh câu chứa nó;
    cột "Nguồn" là mã Feature Spec hoặc thư mục brief; cột "Không nhầm với" chỉ khi
    có thuật ngữ khác trong danh sách dễ lẫn.
 3. Sắp theo bảng chữ cái. Đưa người danh sách để người giữ, sửa hoặc bỏ; không tự
    chốt định nghĩa.
 
-Mục 3 Giọng văn: hỏi người ba điểm (cách gọi người dùng, thì, độ dài câu) nếu chưa có
+Mục 2 Giọng văn: hỏi người ba điểm (cách gọi người dùng, thì, độ dài câu) nếu chưa có
 trong Design brief. Đặt `status: review`. Chạy khối "Sau mỗi lần sửa". `dk check`
 sau đó cảnh báo `glossary-term` cho thuật ngữ trong Feature Spec còn thiếu; thêm
 dòng hoặc báo người bỏ in đậm.

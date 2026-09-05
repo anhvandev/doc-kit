@@ -39,7 +39,7 @@ Lỗi hoặc không tìm thấy lệnh: dừng, báo "Cần cài `dk` trước (
 ### 1. Kiểm spec
 
 Mở spec người chỉ: `status: implemented`, hoặc `approved` và người xác nhận sắp
-phát hành. Khác: **dừng**, báo người. Đọc mục 2, 3, 5, 6, 7, 11.
+phát hành. Khác: **dừng**, báo người. Đọc mục 1, 2, 4, 5, 6, 10.
 
 ### 2. Sinh khung
 
@@ -47,15 +47,15 @@ phát hành. Khác: **dừng**, báo người. Đọc mục 2, 3, 5, 6, 7, 11.
 dk new release-brief <slug> --from docs/features/<F-xxx>-<slug>.md --set owner="<người duyệt>"
 ```
 
-`dk` đặt tên file theo mã spec, chép mục 2 thành "Giúp gì", mục 3 thành "Ai dùng",
-cột hành động của bảng hành vi thành "Bước cơ bản", cột mockup mục 6 thành "Ảnh
-màn hình", mục 11 thành "Giới hạn đã biết". Sửa lỗi thì thêm `--set kind=fix`.
+`dk` đặt tên file theo mã spec, chép mục 1 thành "Giúp gì", mục 2 thành "Ai dùng",
+cột hành động của bảng hành vi thành "Bước cơ bản", cột mockup mục 5 thành "Ảnh
+màn hình", mục 10 thành "Giới hạn đã biết". Sửa lỗi thì thêm `--set kind=fix`.
 
 ### 3. Viết lại bằng ngôn ngữ người dùng
 
 Toàn bộ chữ chép sang phải viết lại: bỏ mã bước, tên role, tên bảng, tên hàm, từ
 kỹ thuật; mỗi bước một câu bắt đầu bằng động từ và nói điều người dùng nhìn thấy.
-Thêm vào mục 6 các ngoại lệ ở mục 7 của spec chưa xử lý. Không hứa điều spec
+Thêm vào mục 5 các ngoại lệ ở mục 6 của spec chưa xử lý. Không hứa điều spec
 không có. Ảnh: giữ liên kết mockup đã duyệt; ảnh chụp thật do người thêm sau.
 
 ### 4. Kiểm
@@ -76,7 +76,7 @@ dk new release-notes --collect <phiên bản> --set owner="<người duyệt>"
 `dk` gom mọi Release brief `status: ready` chưa có `released_in`, nhóm "Mới" và
 "Sửa lỗi" theo `kind`, ghi `released_in` vào từng brief và một dòng changelog cho
 mỗi brief. Không có brief nào thì lệnh báo lỗi: **dừng**, hỏi người brief nào còn
-thiếu hoặc chưa `ready`. Điền mục 4 "Cần lưu ý" từ các brief. Chạy khối "Sau mỗi
+thiếu hoặc chưa `ready`. Điền mục 3 "Cần lưu ý" từ các brief. Chạy khối "Sau mỗi
 lần sửa" cho file notes. Đặt `status: review`. **Dừng.** Người duyệt và đặt
 `published`; sau đó không sửa.
 
@@ -86,7 +86,7 @@ Sau mỗi Release notes `published`, với từng brief vừa phát hành:
 
 1. Hỏi người nhiệm vụ nào của người dùng thay đổi (tên nhóm `task`, ví dụ "Bán
    hàng"). Không tổ chức theo menu.
-2. Trang đã có: sửa đúng mục 3 và 4, `--source <F-xxx>` ở changelog. Chưa có:
+2. Trang đã có: sửa đúng mục 2 và 3, `--source <F-xxx>` ở changelog. Chưa có:
 
 ```
 dk new user-guide <slug> --from docs/release/briefs/<F-xxx>.md --set owner="<người duyệt>" --set task="<nhóm nhiệm vụ>"

@@ -36,10 +36,10 @@ Mọi lệnh nhận `--json` và `--cwd <dir>`. Mã thoát: 0 thành công, 1 l�
   `--set has_ui=false` cho `feature-spec`.
 - Tên file có placeholder `{feature}`, `{step}`, `{layer}`, `{version}`: chép từ `--from`
   hoặc `--set`; thiếu là lỗi nêu cờ cần thêm. `step` khớp `^B\d+[a-z]?$`.
-- `test-case --from <Feature Spec>`: mỗi `ACn` mục 9 một `Scenario`, `Background` từ mục 3;
+- `test-case --from <Feature Spec>`: mỗi `ACn` mục 8 một `Scenario`, `Background` từ mục 2;
   AC không theo Given / When / Then giữ dưới `# chưa tách được`.
-- `release-brief --from <Feature Spec>`: chép nháp mục 2, 3, cột hành động mục 5, mockup
-  mục 6, mục 11 để skill viết lại bằng ngôn ngữ người dùng.
+- `release-brief --from <Feature Spec>`: chép nháp mục 1, 2, cột hành động mục 4, mockup
+  mục 5, mục 10 để skill viết lại bằng ngôn ngữ người dùng.
 - `postmortem --set incident_at="yyyy-mm-dd hh:mm"`: `dk new` tính `written_within_48h`.
 
 ## Changelog

@@ -34,9 +34,9 @@ Chỉ quy tắc, không giải thích; giải thích đọc ở mục báo cáo 
 
 ## Test case
 
-- Sinh từ Feature Spec `approved`: mỗi AC ở mục 9 một Scenario (Gherkin) hoặc một
+- Sinh từ Feature Spec `approved`: mỗi AC ở mục 8 một Scenario (Gherkin) hoặc một
   dòng (bảng), mã `ACn` giữ nguyên để truy vết; tag `@<mã spec> @ACn`.
-- Thêm trường hợp biên từ mục 7 ngoại lệ với mã `En`. Trường hợp biên do người
+- Thêm trường hợp biên từ mục 6 ngoại lệ với mã `En`. Trường hợp biên do người
   duyệt.
 - Mỗi trường hợp: bước thực hiện, dữ liệu vào, kết quả mong đợi cụ thể (thông báo,
   dữ liệu đổi, sự kiện phát ra). "Hoạt động đúng" không phải kết quả mong đợi.
@@ -51,13 +51,13 @@ Chỉ quy tắc, không giải thích; giải thích đọc ở mục báo cáo 
 - `dk check` quy tắc `spec-has-test`: spec rời `draft` phải có test case trong
   `docs/test/` có `source` là mã spec; checklist giao diện và test report không
   thay được.
-- Yêu cầu thay đổi hàng ngày: spec giữ mục 1, 2, 9; chi tiết hành vi để trong
+- Yêu cầu thay đổi hàng ngày: spec giữ frontmatter, mục 1, 8; chi tiết hành vi để trong
   test. Test case khi đó là nơi chi tiết, vẫn truy vết về AC.
 
 ## Test giao diện
 
 - Chỉ khi phần mềm có giao diện (`has_ui: true`). Không có giao diện: bỏ toàn bộ.
-- Checklist theo mã bước: mỗi mã bước ở mục 6 của spec một dòng, so màn hình thật
+- Checklist theo mã bước: mỗi mã bước ở mục 5 của spec một dòng, so màn hình thật
   với mockup đã duyệt và Design system. Chuẩn so sánh là mockup.
 - Sai lệch ghi mã bước, điểm lệch, ảnh; người duyệt sai lệch, quyết định sửa màn
   hình hay sửa mockup (qua CR).

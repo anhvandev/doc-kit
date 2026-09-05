@@ -8,11 +8,11 @@ created_by: dk
 ---
 # Report
 
-## 2. Đã làm
+## 1. Đã làm
 
 - Viết code, chạy test, mọi thứ xanh; xem [plan](../plan.md).
 
-## 3. Bằng chứng
+## 2. Bằng chứng
 
 <!-- gợi ý: mã commit (commit abc1234) không tính vì nằm trong chú thích -->
 

@@ -46,7 +46,7 @@ hình. Sai: **dừng**, báo người. Tìm Feature Spec cùng tính năng:
 dk index features
 ```
 
-Có spec: mã bước lấy từ mục 4 và 5 của spec. Chưa có spec: đề xuất mã bước ở user flow,
+Có spec: mã bước lấy từ mục 3 và 4 của spec. Chưa có spec: đề xuất mã bước ở user flow,
 báo người rằng Feature Spec phải dùng lại đúng mã này.
 
 ### 2. User flow
@@ -55,8 +55,8 @@ báo người rằng Feature Spec phải dùng lại đúng mã này.
 dk new userflow <slug> --from docs/features/<F-xxx>-<slug>.md --set owner="<người phụ trách>"
 ```
 
-Chưa có spec: `--from <brief hoặc CR>` và thêm `--set feature=<F-xxx dự kiến>`. Mục 2 là
-Mermaid, mỗi nút một màn hình hoặc hành động mang mã bước; mục 3 mỗi mã bước một dòng
+Chưa có spec: `--from <brief hoặc CR>` và thêm `--set feature=<F-xxx dự kiến>`. Mục 1 là
+Mermaid, mỗi nút một màn hình hoặc hành động mang mã bước; mục 2 mỗi mã bước một dòng
 với trạng thái cần mockup (bình thường, rỗng, lỗi, đang tải). Chạy khối "Sau mỗi lần
 sửa". `userflow-steps` báo mã lạ: sửa flow theo spec, không sửa spec. Chưa có spec thì
 `dk check` báo `userflow-steps` cho đến khi Feature Spec tồn tại: bỏ qua lỗi này, chạy
@@ -70,7 +70,7 @@ Mỗi màn hình trong flow một file, đen trắng, text hoặc ASCII:
 dk new wireframe <slug> --from docs/design/flows/<F-xxx>-flow.md --set step=<B> --set owner="<người phụ trách>"
 ```
 
-Mục 3 ghi organism dự kiến, tên đúng file trong `docs/design/organisms/`. Chạy khối
+Mục 2 ghi organism dự kiến, tên đúng file trong `docs/design/organisms/`. Chạy khối
 "Sau mỗi lần sửa". **Dừng**, hỏi người duyệt từng wireframe (đổi `status: approved`).
 Chưa duyệt thì không làm mockup.
 
@@ -86,7 +86,7 @@ dk new mockup <slug> --from docs/design/wireframes/<F-xxx>-<B>.md --set owner="<
 Cùng mã bước nhiều trạng thái: file thứ hai trở đi tạo với `--set step=<B>` và `--force`
 không được dùng; đặt `step` là mã bước kèm hậu tố trạng thái được ghi ở `rules.md`
 ("Đặt tên mockup"). Điền thân: chỉ `<section data-organism="<tên>">` với organism đã
-có, mọi màu và khoảng cách qua `var(--...)`; giọng văn theo `foundations.md` mục 6.
+có, mọi màu và khoảng cách qua `var(--...)`; giọng văn theo `foundations.md` mục 5.
 Style cho organism chép từ mockup mẫu `F-000-B0.html` của họ Design system, không viết
 style mới; thiếu token hay organism: **dừng**, báo họ Design system, không gõ giá trị tạm. Chạy khối "Sau mỗi lần sửa"; `mockup-tokens` báo lỗi thì
 thay bằng biến. Mở file từ đĩa kiểm màu và khoảng cách.
@@ -119,7 +119,7 @@ Dán bản sinh; không viết tay. Mockup HTML tĩnh thì bỏ bước này.
 ### 7. Báo và bàn giao
 
 **Dừng.** Báo người: flow, số wireframe, số mockup theo trạng thái, liên kết mở từ đĩa;
-hỏi duyệt mockup (đổi `status: approved`). Nhắc họ Feature Spec điền mục 6 Giao diện
+hỏi duyệt mockup (đổi `status: approved`). Nhắc họ Feature Spec điền mục 5 Giao diện
 bằng liên kết `../design/mockups/<F-xxx>-<B>.html` theo mã bước.
 
 ### Sau mỗi lần sửa
@@ -139,7 +139,7 @@ Kiểm CR như bước 1. Sửa giao diện thì sửa mockup trước: đúng m
 nêu; thêm bước thì thêm nút mã `B2a` ở flow (khớp spec sau khi họ Feature Spec sửa),
 wireframe và mockup mới cho bước đó. Đổi `source` sang mã CR; `approved` giữ nguyên.
 Chạy khối "Sau mỗi lần sửa" với `--source <CR-id>`. Báo người mockup đã đổi; nhắc họ CR
-đánh dấu dòng mục 7 và họ Test cập nhật test giao diện.
+đánh dấu dòng mục 6 và họ Test cập nhật test giao diện.
 
 ## `html`
 

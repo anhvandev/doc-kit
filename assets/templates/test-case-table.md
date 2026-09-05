@@ -13,15 +13,15 @@ feature: ""
 
 # Test case: {{.Title}}
 
-<!-- gợi ý: mục 1 là frontmatter. Sinh từ mục 9 của Feature Spec {{.Feature}} bằng dk new test-case-table --from; mỗi tiêu chí chấp nhận một dòng, thêm dòng E<n> cho ngoại lệ ở mục 7 của spec. Dòng "chưa tách được" là AC lệch khung Given / When / Then trong spec. Cột Kết quả điền khi chạy: pass | fail | chưa chạy. -->
+<!-- gợi ý: Sinh từ mục 8 của Feature Spec {{.Feature}} bằng dk new test-case-table --from; mỗi tiêu chí chấp nhận một dòng, thêm dòng E<n> cho ngoại lệ ở mục 6 của spec. Dòng "chưa tách được" là AC lệch khung Given / When / Then trong spec. Cột Kết quả điền khi chạy: pass | fail | chưa chạy. -->
 
-## 2. Điều kiện chung
+## 1. Điều kiện chung
 
-<!-- gợi ý: từ mục 3 của spec: tác nhân, dữ liệu có sẵn, quyền -->
+<!-- gợi ý: từ mục 2 của spec: tác nhân, dữ liệu có sẵn, quyền -->
 {{range .Background}}
 - {{.}}{{end}}
 
-## 3. Trường hợp
+## 2. Trường hợp
 
 | Mã | Tên | Given | When | Then | Kết quả |
 |---|---|---|---|---|---|
@@ -29,9 +29,9 @@ feature: ""
 {{else}}| {{.Code}} | {{cell .Title}} | {{cell .Given}} | {{cell .When}} | {{cell .Then}} | chưa chạy |
 {{end}}{{else}}| AC1 | | | | | chưa chạy |
 {{end}}
-## 4. Trường hợp biên
+## 3. Trường hợp biên
 
-<!-- gợi ý: từ mục 7 của spec, mã E1, E2... cùng khung bảng trên -->
+<!-- gợi ý: từ mục 6 của spec, mã E1, E2... cùng khung bảng trên -->
 
 | Mã | Tên | Given | When | Then | Kết quả |
 |---|---|---|---|---|---|

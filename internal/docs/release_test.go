@@ -14,33 +14,33 @@ import (
 
 const releaseSpecBody = `# F-001: Bộ lọc
 
-## 2. Mục đích và giá trị
+## 1. Mục đích và giá trị
 
 <!-- gợi ý: bỏ -->
 
 Người dùng lọc đơn theo trạng thái.
 
-## 3. Tác nhân và điều kiện tiên quyết
+## 2. Tác nhân và điều kiện tiên quyết
 
 - Tác nhân: nhân viên bán hàng
 - Điều kiện tiên quyết: đã đăng nhập
 
-## 4. Sơ đồ luồng chính
+## 3. Sơ đồ luồng chính
 
-## 5. Hành vi theo mã bước
+## 4. Hành vi theo mã bước
 
 | Mã | Hành động của tác nhân | Phản hồi quan sát được của hệ thống |
 |---|---|---|
 | B1 | Mở danh sách đơn | Hiển thị bộ lọc |
 | B2 | Chọn trạng thái | Danh sách cập nhật |
 
-## 6. Giao diện
+## 5. Giao diện
 
 | Mã bước | Mockup | Trạng thái hiển thị |
 |---|---|---|
 | B1 | [B1](../design/mockups/F-001-B1.html) | normal |
 
-## 11. Ngoài phạm vi
+## 10. Ngoài phạm vi
 
 - Lọc theo khách hàng
 `
@@ -57,7 +57,7 @@ func TestExtractRelease(t *testing.T) {
 		t.Fatalf("liên kết mockup phải đổi gốc sang release/briefs: %+v", ex.Screens)
 	}
 	// Ô mockup không phải liên kết (chữ mẫu của template) bị bỏ.
-	if ex := ExtractRelease([]byte("## 6. Giao diện\n\n| Mã | Mockup | T |\n|---|---|---|\n| B1 | chưa có, xem họ Design | |\n"), "/a", "/b"); len(ex.Screens) != 0 {
+	if ex := ExtractRelease([]byte("## 5. Giao diện\n\n| Mã | Mockup | T |\n|---|---|---|\n| B1 | chưa có, xem họ Design | |\n"), "/a", "/b"); len(ex.Screens) != 0 {
 		t.Fatalf("ô không liên kết phải bỏ: %+v", ex.Screens)
 	}
 	got := rebaseLinks("[a](../x.html#neo) [b](/abs/y.html) [c](https://e.com/z) [d](mailto:a@b.c)", "/p/docs/features", "/p/docs/release/briefs")
@@ -97,8 +97,8 @@ func TestCollectReleaseNotes(t *testing.T) {
 	}
 	b, _ := os.ReadFile(res.Path)
 	s := string(b)
-	if !strings.Contains(s, "version: \"v1.0.0\"") || !strings.Contains(s, "## 2. Mới\n\n- [Tính năng F-001](briefs/F-001.md)\n") ||
-		!strings.Contains(s, "## 3. Sửa lỗi\n\n- [Tính năng F-002](briefs/F-002.md)\n") || strings.Contains(s, "F-003") || strings.Contains(s, "F-004") {
+	if !strings.Contains(s, "version: \"v1.0.0\"") || !strings.Contains(s, "## 1. Mới\n\n- [Tính năng F-001](briefs/F-001.md)\n") ||
+		!strings.Contains(s, "## 2. Sửa lỗi\n\n- [Tính năng F-002](briefs/F-002.md)\n") || strings.Contains(s, "F-003") || strings.Contains(s, "F-004") {
 		t.Fatalf("release notes:\n%s", s)
 	}
 	for p, want := range map[string]string{f1: "v1.0.0", f2: "v1.0.0", f3: "", f4: "v0.9.0"} {

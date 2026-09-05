@@ -9,7 +9,7 @@ không giải thích.
 - Feature list là tài liệu định hướng cấp dự án: trả lời "sản phẩm dự kiến có những
   tính năng gì, cái nào trước". Không phải Feature Spec; không mô tả hành vi.
 - Nguồn sự thật của list là Product brief đã duyệt (`source`). Mỗi dòng phải dẫn
-  được về một mục của brief hoặc idea; không dẫn được thì vào mục 5 Chưa rõ.
+  được về một mục của brief hoặc idea; không dẫn được thì vào mục 4 Chưa rõ.
 - Người chốt (`approved`). AI soạn nháp, dừng ở `review`. Sau khi chốt chỉ sửa theo
   CR; riêng cột Spec điền được không cần CR.
 
@@ -17,7 +17,7 @@ không giải thích.
 
 - Một file cho một sản phẩm: `docs/overview/feature-list.md`, dưới 200 dòng
   (`dk check` cảnh báo). Đã có file thì cập nhật, không tạo file thứ hai.
-- Bảng mục 3 đủ 7 cột: Mã, Tên, Mô tả, Nhóm, Ưu tiên, Nguồn, Spec.
+- Bảng mục 2 đủ 7 cột: Mã, Tên, Mô tả, Nhóm, Ưu tiên, Nguồn, Spec.
 - Mã tạm `FL-01`, `FL-02` cấp một lần, không đánh số lại, không dùng lại. Dòng bỏ
   ghi ưu tiên `won't` và giữ nguyên chỗ.
 - Ưu tiên theo MoSCoW: `must` (có tiêu chí chấp nhận trong brief §4), `should` (brief
@@ -29,7 +29,7 @@ không giải thích.
 
 ## Quan hệ với tài liệu khác
 
-- Product overview mục 4 dùng cùng tên nhóm với mục 4 của list; list là nơi liệt kê
+- Product overview mục 3 dùng cùng tên nhóm với mục 3 của list; list là nơi liệt kê
   đầy đủ, overview chỉ một dòng một nhóm.
 - Roadmap tham chiếu `FL-xx` khi tính năng chưa có `F-xxx`; có spec rồi thì dùng
   mã spec.

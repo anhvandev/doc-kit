@@ -38,7 +38,7 @@ Lỗi hoặc không tìm thấy lệnh: dừng, báo "Cần cài `dk` trước (
    `docker-compose*.yml`, script deploy, `Makefile`. Không có thì **hỏi người**
    cách đang triển khai; không bịa.
 2. `dk new deployment deployment --set owner="<người vận hành>"`.
-3. Mục 4 và 6: mỗi bước một lệnh trong khối ``` chép từ cấu hình thật, kèm kết quả
+3. Mục 3 và 5: mỗi bước một lệnh trong khối ``` chép từ cấu hình thật, kèm kết quả
    mong đợi; rollback đủ bước quay về phiên bản trước. Không giả định kiến thức ngầm.
 4. Chạy khối "Sau mỗi lần sửa". `status: review`. **Dừng.** Người chạy thử một lần
    theo tài liệu rồi `approved`.
@@ -49,7 +49,7 @@ Lỗi hoặc không tìm thấy lệnh: dừng, báo "Cần cài `dk` trước (
    `.env` thật hay secret store.
 2. `dk new environment environment --set owner="<người vận hành>"`.
 3. Mỗi biến một dòng bảng: ý nghĩa, khác biệt dev/staging/prod, có phải secret.
-   Mục 4 chỉ `KEY=<mô tả nơi lấy>`. Người dán giá trị thật vào chat thì không chép,
+   Mục 3 chỉ `KEY=<mô tả nơi lấy>`. Người dán giá trị thật vào chat thì không chép,
    báo người xoay vòng secret đó.
 4. Chạy khối "Sau mỗi lần sửa". `env-no-secret` báo lỗi dòng nào thì thay bằng
    placeholder `<...>`. Nhắc người: rule là lớp phụ, không thay công cụ quét secret.
@@ -65,7 +65,7 @@ dk new runbook <slug> --set owner="<người trực>" --set title="<tên sự c�
 Một sự cố một file. Ba khối bước theo thứ tự: chẩn đoán (xác nhận đúng sự cố),
 xử lý, xác nhận (metric về ngưỡng, thử thao tác). Mỗi bước một lệnh hoặc một hành
 động quan sát được kèm kết quả nếu đúng; lệnh lấy từ postmortem, log, chat sự cố
-thật. Mục 2 trỏ tên cảnh báo trong `monitoring.md`. Chạy khối "Sau mỗi lần sửa".
+thật. Mục 1 trỏ tên cảnh báo trong `monitoring.md`. Chạy khối "Sau mỗi lần sửa".
 **Dừng.** Người chạy thử từng bước rồi `approved`.
 
 ## `new`: Monitoring
@@ -85,7 +85,7 @@ dk new postmortem <slug> --set owner="<người điều phối>" --set incident_
 ```
 
 `dk` tính `written_within_48h`. Giá trị `false`: **báo người ngay** là đã quá 48
-giờ (hoặc `incident_at` sai định dạng), vẫn viết và ghi lý do ở mục 7.
+giờ (hoặc `incident_at` sai định dạng), vẫn viết và ghi lý do ở mục 6.
 
 - Timeline từ log, alert, chat; không suy đoán giờ.
 - Nguyên nhân gốc nói về hệ thống và quy trình; không nêu tên người gây lỗi.
@@ -103,7 +103,7 @@ dk new backup-dr backup-dr --set owner="<người vận hành>"
 ```
 
 Người chốt RPO, RTO; skill điền quy trình khôi phục từng bước từ cấu hình backup
-thật. Sau mỗi lần diễn tập: ghi dòng mục 6 và cập nhật `last_drill: <yyyy-mm-dd>`.
+thật. Sau mỗi lần diễn tập: ghi dòng mục 5 và cập nhật `last_drill: <yyyy-mm-dd>`.
 `dk status` báo "DR chưa diễn tập quá 6 tháng": nhắc người lên lịch diễn tập,
 không tự đổi `last_drill`.
 

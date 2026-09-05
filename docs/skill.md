@@ -13,7 +13,7 @@ Cài bằng `dk skill install` (mặc định target `claude`, scope dự án; `
 | `doc-overview` | `docs/overview/` | Product overview từ Product brief, Architecture từ mã, Glossary; Feature catalog bằng `dk index features` | brief chưa `approved` |
 | `doc-feature-list` | `docs/overview/` | Feature list: bảng tính năng tách từ Product brief, mã tạm `FL-xx`, nhóm, ưu tiên MoSCoW, cột Spec | list `review`; brief chưa `approved` |
 | `doc-adr` | `docs/adr/` | ADR đánh số, thân bất biến sau `accepted`, thay bằng ADR mới | ADR `proposed` |
-| `doc-feature-spec` | `docs/features/` | Feature Spec 11 mục, 5 biến thể `format` | spec `review`; chỉ sửa theo CR `approved` |
+| `doc-feature-spec` | `docs/features/` | Feature Spec 10 mục, 5 biến thể `format` | spec `review`; chỉ sửa theo CR `approved` |
 | `doc-design-system` | `docs/design/` | tokens, foundations, atoms đến templates, patterns | Design brief chưa `approved` |
 | `doc-design-flow` | `docs/design/flows`, `wireframes`, `mockups` | user flow, wireframe, mockup mỗi trạng thái, prototype, UI spec | wireframe trước mockup |
 | `doc-test` | `docs/test/` | strategy, test case `.feature` hoặc bảng, checklist UI, test report | strategy chờ chốt; `bdd_cmd` rỗng thì "chưa kiểm chạy được" |
@@ -55,13 +55,13 @@ Quét `docs/` và `plans/`; mã thoát 3 khi có lỗi, `--strict` coi warning l
 | `status-valid` | lỗi | mọi loại | `status` ngoài `statuses` của loại |
 | `link-broken` | lỗi | Markdown | liên kết tương đối trỏ file không có |
 | `step-codes` | lỗi | Feature Spec có sơ đồ | mã bước trong sơ đồ và bảng hành vi lệch nhau |
-| `spec-section-order` | lỗi | Feature Spec | tiêu đề `## N.` thiếu, lạ, lặp, sai thứ tự (bỏ 6 khi `has_ui: false`, bỏ 4 khi `crud`) |
+| `spec-section-order` | lỗi | Feature Spec | tiêu đề `## 1.` đến `## 10.` thiếu, lạ, lặp, sai thứ tự (bỏ 5 khi `has_ui: false`, bỏ 3 khi `crud`); spec viết theo bản cũ đếm từ `## 2.` phải đánh số lại |
 | `cr-approval-order` | lỗi | Feature Spec có `source` là CR | spec sửa sau khi CR chưa `approved` |
 | `backlink` | lỗi / cảnh báo | có `source` / đã chốt | `source` không trỏ đến đâu; tài liệu chốt không ai trỏ về |
 | `spec-has-test` | cảnh báo | Feature Spec `approved` trở lên | chưa có test case trong `docs/test/` có `source` là spec |
 | `line-threshold` | cảnh báo / lỗi | Markdown trong `docs/` | vượt `warn_lines` (theo loại hoặc `dk.toml`) / `max_lines` |
 | `adr-immutable` | lỗi | ADR chốt tại HEAD | thân khác bản HEAD |
-| `glossary-term` | cảnh báo | Feature Spec | chữ in đậm mục 2, 5, 8 chưa có trong Glossary |
+| `glossary-term` | cảnh báo | Feature Spec | chữ in đậm mục 1, 4, 7 chưa có trong Glossary |
 | `mockup-tokens` | lỗi | mockup `.html` | hex hoặc px trong `<style>` hay `style=`; thiếu khối `<!-- dk: -->` |
 | `userflow-steps` | lỗi | userflow | mã bước không phải tập con của spec cùng `feature` |
 | `report-evidence` | cảnh báo | report | không có mã commit, liên kết file output hay khối kết quả |

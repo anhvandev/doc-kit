@@ -48,7 +48,7 @@ func TestFeatureSpecSections(t *testing.T) {
 		t.Fatalf("feature-spec cần 10 mục thân (11 kể frontmatter), có %d", n)
 	}
 	if !strings.Contains(string(out), "```mermaid") || !strings.Contains(string(out), "B1[") {
-		t.Fatal("mục 4 phải có khối mermaid với nút B1")
+		t.Fatal("mục 3 phải có khối mermaid với nút B1")
 	}
 	// Biến thể format và has_ui: tập số mục cấp 2 theo đúng quy tắc spec-section-order.
 	for _, c := range []struct {
@@ -57,12 +57,12 @@ func TestFeatureSpecSections(t *testing.T) {
 		want   string
 		marker string
 	}{
-		{"spec", true, "2,3,4,5,6,7,8,9,10,11", "flowchart TD"},
-		{"spec", false, "2,3,4,5,7,8,9,10,11", "flowchart TD"},
-		{"use-case", true, "2,3,4,5,6,7,8,9,10,11", "sequenceDiagram"},
-		{"story", true, "2,3,4,5,6,7,8,9,10,11", "```gherkin"},
-		{"crud", true, "2,3,5,6,7,8,9,10,11", "## 5. Bảng field và quyền"},
-		{"state", true, "2,3,4,5,6,7,8,9,10,11", "stateDiagram-v2"},
+		{"spec", true, "1,2,3,4,5,6,7,8,9,10", "flowchart TD"},
+		{"spec", false, "1,2,3,4,6,7,8,9,10", "flowchart TD"},
+		{"use-case", true, "1,2,3,4,5,6,7,8,9,10", "sequenceDiagram"},
+		{"story", true, "1,2,3,4,5,6,7,8,9,10", "```gherkin"},
+		{"crud", true, "1,2,4,5,6,7,8,9,10", "## 4. Bảng field và quyền"},
+		{"state", true, "1,2,3,4,5,6,7,8,9,10", "stateDiagram-v2"},
 	} {
 		out, err := Render("feature-spec", Data{Format: c.format, HasUI: c.hasUI})
 		if err != nil {
