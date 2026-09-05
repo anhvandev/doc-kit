@@ -137,7 +137,8 @@ type commandHook struct {
 
 // hookGroup là một mục trong hooks.<Event>; chỉ đọc phần dk cần.
 type hookGroup struct {
-	Hooks []struct {
+	Matcher string `json:"matcher"`
+	Hooks   []struct {
 		Command string `json:"command"`
 	} `json:"hooks"`
 }
@@ -251,12 +252,15 @@ func putHooks(o, h *object) error {
 	return nil
 }
 
+// MapHooks giữ nguyên: matcher của entries đã là tên tool Claude Code.
+func (c *Claude) MapHooks(entries []HookEntry) []HookEntry { return entries }
+
 func (c *Claude) InstallHooks(global bool, entries []HookEntry) error {
 	path, err := c.SettingsPath(global)
 	if err != nil {
 		return err
 	}
-	return installHooksFile(path, entries)
+	return installHooksFile(path, c.MapHooks(entries))
 }
 
 func (c *Claude) UninstallHooks(global bool) error {
@@ -268,7 +272,7 @@ func (c *Claude) UninstallHooks(global bool) error {
 }
 
 // InstalledHooks liệt kê lệnh có tiền tố HookCommandPrefix trong settings.json.
-func (c *Claude) InstalledHooks(global bool) ([]string, error) {
+func (c *Claude) InstalledHooks(global bool) ([]HookEntry, error) {
 	path, err := c.SettingsPath(global)
 	if err != nil {
 		return nil, err
@@ -287,21 +291,15 @@ func installHooksFile(path string, entries []HookEntry) error {
 	if err != nil {
 		return err
 	}
+	// Bỏ mọi lệnh dk đang có trước, kể cả mục có matcher hay lệnh của bản cũ,
+	// rồi ghi entries; mục của người dùng giữ nguyên.
+	if err := stripAllDKHooks(h); err != nil {
+		return err
+	}
 	for _, e := range entries {
 		arr, err := eventOf(h, e.Event)
 		if err != nil {
 			return err
-		}
-		exists := false
-		for _, raw := range arr {
-			var g hookGroup
-			if json.Unmarshal(raw, &g) == nil && g.has(func(cmd string) bool { return cmd == e.Command }) {
-				exists = true
-				break
-			}
-		}
-		if exists {
-			continue
 		}
 		entry := struct {
 			Matcher string        `json:"matcher"`
@@ -362,6 +360,17 @@ func uninstallHooksFile(path string) error {
 	if err != nil {
 		return err
 	}
+	if err := stripAllDKHooks(h); err != nil {
+		return err
+	}
+	if err := putHooks(o, h); err != nil {
+		return err
+	}
+	return writeSettings(path, o)
+}
+
+// stripAllDKHooks bỏ lệnh dk khỏi mọi event; event không còn mục nào thì xóa.
+func stripAllDKHooks(h *object) error {
 	for _, event := range append([]string(nil), h.keys...) {
 		arr, err := eventOf(h, event)
 		if err != nil {
@@ -383,13 +392,10 @@ func uninstallHooksFile(path string) error {
 		}
 		h.set(event, joinArray(kept))
 	}
-	if err := putHooks(o, h); err != nil {
-		return err
-	}
-	return writeSettings(path, o)
+	return nil
 }
 
-func installedHooksFile(path string) ([]string, error) {
+func installedHooksFile(path string) ([]HookEntry, error) {
 	o, err := readSettings(path)
 	if err != nil {
 		return nil, err
@@ -398,7 +404,7 @@ func installedHooksFile(path string) ([]string, error) {
 	if err != nil {
 		return nil, err
 	}
-	var cmds []string
+	var out []HookEntry
 	for _, event := range h.keys {
 		arr, err := eventOf(h, event)
 		if err != nil {
@@ -411,10 +417,10 @@ func installedHooksFile(path string) ([]string, error) {
 			}
 			for _, hk := range g.Hooks {
 				if strings.HasPrefix(hk.Command, HookCommandPrefix) {
-					cmds = append(cmds, hk.Command)
+					out = append(out, HookEntry{Event: event, Matcher: g.Matcher, Command: hk.Command})
 				}
 			}
 		}
 	}
-	return cmds, nil
+	return out, nil
 }

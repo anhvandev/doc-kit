@@ -151,18 +151,45 @@ func (a *app) doctorTarget(t target.Target, global bool, add func(string, string
 		add("skill ("+scope+")", "đúng phiên bản "+strconv.Itoa(current)+"/"+strconv.Itoa(len(statuses)), false, "xem các dòng skill ở trên")
 	}
 
-	cmds, err := t.InstalledHooks(global)
+	got, err := t.InstalledHooks(global)
 	trust := ""
 	if t.Name() == "codex" {
 		trust = "; " + target.CodexTrustNote
 	}
-	if err != nil {
+	want := t.MapHooks(hook.Entries())
+	fix := "`dk hook install" + targetFlag + "`" + trust
+	switch {
+	case err != nil:
 		add("hook ("+scope+")", err.Error(), false, "sửa cấu hình hook của target rồi `dk hook install"+targetFlag+"`")
-	} else if want := len(hook.Entries()); len(cmds) < want {
-		add("hook ("+scope+")", "có "+strconv.Itoa(len(cmds))+"/"+strconv.Itoa(want), false, "`dk hook install"+targetFlag+"`"+trust)
-	} else {
-		add("hook ("+scope+")", "đủ "+strconv.Itoa(len(cmds))+" hook", true, "")
+	case sameHooks(got, want):
+		add("hook ("+scope+")", "đủ "+strconv.Itoa(len(got))+" hook", true, "")
+	case len(got) < len(want) && subsetHooks(got, want):
+		add("hook ("+scope+")", "có "+strconv.Itoa(len(got))+"/"+strconv.Itoa(len(want)), false, fix)
+	default:
+		add("hook ("+scope+")", "lệch bản hiện tại (matcher hoặc lệnh khác)", false, fix)
 	}
+}
+
+// subsetHooks: mọi hook trong got đều có trong want (so event, matcher, lệnh).
+func subsetHooks(got, want []target.HookEntry) bool {
+	for _, g := range got {
+		found := false
+		for _, w := range want {
+			if g == w {
+				found = true
+				break
+			}
+		}
+		if !found {
+			return false
+		}
+	}
+	return true
+}
+
+// sameHooks: got và want cùng tập hook, không thừa không thiếu.
+func sameHooks(got, want []target.HookEntry) bool {
+	return len(got) == len(want) && subsetHooks(got, want) && subsetHooks(want, got)
 }
 
 // doctorPreCommit kiểm script pre-commit có mặt và gọi dk.

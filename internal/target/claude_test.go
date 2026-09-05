@@ -3,6 +3,7 @@ package target
 import (
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -141,5 +142,60 @@ func TestNullHooksTreatedAsEmpty(t *testing.T) {
 	os.WriteFile(path, []byte("{\"hooks\": null}\n"), 0o644)
 	if err := c.InstallHooks(false, entries); err != nil {
 		t.Fatal(err)
+	}
+}
+
+// Cài lại sau khi bản mới đổi matcher hoặc lệnh: mục dk cũ bị thay, không
+// nối thêm; hook của người dùng trong cùng mục giữ nguyên.
+func TestInstallReplacesOldDKHooks(t *testing.T) {
+	root := t.TempDir()
+	c := &Claude{Root: root}
+	path := filepath.Join(root, ".claude", "settings.json")
+	os.MkdirAll(filepath.Dir(path), 0o755)
+	old := `{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "dk hook run pre-write"
+          },
+          {
+            "type": "command",
+            "command": "my-own-guard.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "dk hook run old-cmd"
+          }
+        ]
+      }
+    ]
+  }
+}
+`
+	os.WriteFile(path, []byte(old), 0o644)
+	if err := c.InstallHooks(false, entries); err != nil {
+		t.Fatal(err)
+	}
+	got, err := c.InstalledHooks(false)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(got) != 2 || got[0] != entries[0] || got[1] != entries[1] {
+		t.Fatalf("sau cài lại: %+v", got)
+	}
+	b, _ := os.ReadFile(path)
+	if !strings.Contains(string(b), "my-own-guard.sh") || strings.Count(string(b), "dk hook run") != 2 {
+		t.Fatalf("hook người dùng phải còn, lệnh dk đúng 2:\n%s", b)
 	}
 }

@@ -246,3 +246,36 @@ func TestDoctor(t *testing.T) {
 		t.Fatalf("doctor text: %s", out)
 	}
 }
+
+// Hook đã cài bằng bản cũ (matcher khác): doctor báo lệch, hook install sửa lại.
+func TestDoctorHookDrift(t *testing.T) {
+	dir := t.TempDir()
+	git(t, dir, "init", "-q")
+	for _, args := range [][]string{{"init"}, {"hook", "install"}} {
+		if out, code := run(t, dir, args...); code != 0 {
+			t.Fatalf("%v: %s", args, out)
+		}
+	}
+	path := filepath.Join(dir, ".claude", "settings.json")
+	b, _ := os.ReadFile(path)
+	b = []byte(strings.Replace(string(b), `"matcher": "Edit|Write"`, `"matcher": "Write"`, 1))
+	if err := os.WriteFile(path, b, 0o644); err != nil {
+		t.Fatal(err)
+	}
+	out, code := run(t, dir, "doctor", "--json")
+	var rows []doctorRow
+	if code != 3 || json.Unmarshal([]byte(out), &rows) != nil {
+		t.Fatalf("doctor: %s (%d)", out, code)
+	}
+	if r := rowOfDoctor(rows, "hook (claude, dự án)"); r.OK || !strings.Contains(r.Status, "lệch") || !strings.Contains(r.Fix, "dk hook install") {
+		t.Fatalf("hook lệch: %+v", r)
+	}
+	if out, code := run(t, dir, "hook", "install"); code != 0 {
+		t.Fatalf("hook install: %s", out)
+	}
+	out, code = run(t, dir, "doctor", "--json")
+	json.Unmarshal([]byte(out), &rows)
+	if r := rowOfDoctor(rows, "hook (claude, dự án)"); !r.OK || r.Status != "đủ 2 hook" {
+		t.Fatalf("sau cài lại: %+v (code %d)", r, code)
+	}
+}

@@ -57,19 +57,23 @@ func (c *Codex) HooksPath(global bool) (string, error) {
 	return filepath.Join(b, "hooks.json"), nil
 }
 
-// InstallHooks ghi entries với matcher apply_patch: Codex gọi PreToolUse và
-// PostToolUse cho apply_patch (tài liệu hooks Codex, kiểm với 0.153.2).
-func (c *Codex) InstallHooks(global bool, entries []HookEntry) error {
-	path, err := c.HooksPath(global)
-	if err != nil {
-		return err
-	}
+// MapHooks đổi matcher sang apply_patch: Codex gọi PreToolUse và PostToolUse
+// cho apply_patch (tài liệu hooks Codex, kiểm với 0.153.2).
+func (c *Codex) MapHooks(entries []HookEntry) []HookEntry {
 	mapped := make([]HookEntry, len(entries))
 	for i, e := range entries {
 		e.Matcher = CodexMatcher
 		mapped[i] = e
 	}
-	return installHooksFile(path, mapped)
+	return mapped
+}
+
+func (c *Codex) InstallHooks(global bool, entries []HookEntry) error {
+	path, err := c.HooksPath(global)
+	if err != nil {
+		return err
+	}
+	return installHooksFile(path, c.MapHooks(entries))
 }
 
 func (c *Codex) UninstallHooks(global bool) error {
@@ -80,7 +84,7 @@ func (c *Codex) UninstallHooks(global bool) error {
 	return uninstallHooksFile(path)
 }
 
-func (c *Codex) InstalledHooks(global bool) ([]string, error) {
+func (c *Codex) InstalledHooks(global bool) ([]HookEntry, error) {
 	path, err := c.HooksPath(global)
 	if err != nil {
 		return nil, err
