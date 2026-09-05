@@ -7,7 +7,7 @@ Mọi lệnh nhận `--json` và `--cwd <dir>`. Mã thoát: 0 thành công, 1 l�
 |---|---|
 | `dk --version` | phiên bản; `go install` lấy từ build info |
 | `dk self-check` | phiên bản, số template, số skill, target, sha256 nội dung nhúng; mã 1 khi template hoặc skill nhúng hỏng |
-| `dk doctor [--target claude,codex] [--global]` | bảng `mục \| trạng thái \| cách sửa`: `dk.toml`, `docs/`, `dk` trên PATH, git, pre-commit, khối ngữ cảnh agent trong `CLAUDE.md` và `AGENTS.md` (thiếu file; có file chưa có khối; cũ hoặc bị sửa tay; khối thiếu mốc đóng hoặc nhiều hơn một khối), từng skill sai phiên bản, hook theo từng target (nhãn dòng `skill (claude, dự án)`, `hook (codex, toàn máy)`, `skill doc-x (claude)`; đổi từ `v0.2.0`); không nêu `--target` mà có `.codex/skills/` hoặc `.codex/hooks.json` thì kiểm cả Codex; target lạ vẫn in bảng, mã 3 |
+| `dk doctor [--target claude,codex] [--global]` | bảng `mục \| trạng thái \| cách sửa`: `dk.toml`, `docs/`, `dk` trên PATH, git, pre-commit, khối ngữ cảnh agent trong `CLAUDE.md` và `AGENTS.md` (thiếu file; có file chưa có khối; cũ hoặc bị sửa tay; khối thiếu mốc đóng hoặc nhiều hơn một khối), từng skill sai phiên bản, hook theo từng target (đủ, thiếu, hoặc `lệch bản hiện tại` khi matcher hay lệnh khác bản nhúng; nhãn dòng `skill (claude, dự án)`, `hook (codex, toàn máy)`, `skill doc-x (claude)`; đổi từ `v0.2.0`); không nêu `--target` mà có `.codex/skills/` hoặc `.codex/hooks.json` thì kiểm cả Codex; target lạ vẫn in bảng, mã 3 |
 | `dk init [--force]` | `dk.toml`, cây `docs/`, `docs/CHANGELOG-DOCS.md`, `plans/`, pre-commit khi có git; `--force` giữ `dk.toml` cũ, chỉ bổ sung; từ chối tạo dự án lồng nhau |
 | `dk init --agent-context` | ghi `assets/agent-context.md` (tiếng Anh, dưới 120 dòng) vào `CLAUDE.md` và `AGENTS.md` ở gốc dự án (có `dk.toml`) hoặc thư mục hiện tại giữa `<!-- dk:agent-context start version=… hash=… -->` và `<!-- dk:agent-context end -->`; file chưa có thì tạo, có khối thì thay tại chỗ, chưa có khối thì nối cuối; phần ngoài khối giữ nguyên; in `created`, `updated`, `unchanged` từng file; không cần `dk.toml` |
 | `dk template list \| show <loại>` | bảng loại (42) và template thô |
@@ -23,7 +23,7 @@ Mọi lệnh nhận `--json` và `--cwd <dir>`. Mã thoát: 0 thành công, 1 l�
 | `dk refs <file>` | liên kết đi và đến |
 | `dk status` | tài liệu theo loại × trạng thái, CR mở, changelog pending, finding, DR quá 6 tháng |
 | `dk skill list \| install [<tên>...] \| uninstall [<tên>...] \| status` | cờ `--target claude` (`codex`, hoặc `claude,codex` cho cả hai), `--global`, `--force` |
-| `dk hook install \| uninstall` | 2 hook mỗi target vào cấu hình target (`--target` như trên); Codex in nhắc trust (`/hooks`); `dk hook run` ẩn, do harness gọi, đọc `tool_input.file_path` (Claude) hoặc patch `apply_patch` trong `tool_input.command` (Codex) |
+| `dk hook install \| uninstall` | 2 hook mỗi target vào cấu hình target (`--target` như trên); `install` bỏ mọi lệnh `dk hook run` đang có rồi ghi bản hiện tại, nên chạy lại sau khi nâng `dk` là đủ, không nối thêm mục trùng; Codex in nhắc trust (`/hooks`); `dk hook run` ẩn, do harness gọi, đọc `tool_input.file_path` (Claude) hoặc patch `apply_patch` trong `tool_input.command` (Codex) |
 | `dk tokens css [--in] [--out]` | `tokens.json` sang `tokens.css` |
 
 ## `new`: quy ước theo loại

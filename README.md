@@ -36,7 +36,7 @@ phiên bản, số template, số skill và hash nội dung nhúng để so hai 
 cd du-an
 dk init                 # dk.toml, docs/, docs/CHANGELOG-DOCS.md, plans/, pre-commit; không đụng .claude/
 dk skill install        # 12 skill vào .claude/skills/, dấu vết dk_* trong frontmatter
-dk hook install         # 2 hook vào .claude/settings.json, giữ nguyên khóa khác
+dk hook install         # 2 hook vào .claude/settings.json, giữ nguyên khóa khác; chạy lại thay mục dk cũ
 dk init --agent-context # ghi khối quy tắc (tiếng Anh) vào CLAUDE.md và AGENTS.md giữa hai dấu mốc; chạy lại chỉ thay khối
 dk doctor               # kiểm dk.toml, git, pre-commit, dk trên PATH, khối ngữ cảnh agent, skill đúng phiên bản, hook
 ```
